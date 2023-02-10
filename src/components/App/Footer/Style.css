@@ -1,0 +1,24 @@
+.footer {
+    width: 100fr;
+    height: auto;
+    background-color: #FFE44D;
+    padding: 16px 20px;
+}
+.footer__container {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    
+}
+.footer__group-navi {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+li {
+    list-style-type: none;
+}
+a {
+    text-decoration: none;
+}

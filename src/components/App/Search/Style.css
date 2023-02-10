@@ -1,0 +1,8 @@
+.search__title {
+    font-family: 'Nunito';
+    font-size: 25px;
+    padding: 15px;
+}
+.search__bold {
+    font-weight: 800;
+}
