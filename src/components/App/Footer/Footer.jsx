@@ -2,6 +2,7 @@ import React from "react";
 import Like from '../../../assets/image/save.svg';
 import Logo from '../../../assets/image/logo_dogFood.svg';
 import '../Footer/Style.css';
+import { Link } from "react-router-dom";
 
 
 export function Footer (params) {
@@ -26,7 +27,7 @@ export function Footer (params) {
             <div className='footer__group'>
             <ul>
                     <li><a href='#'>Оплата и доставка</a></li>
-                    <li><a href='#'>Часто спрашивают</a></li>
+                    <li><Link to={'/faq'}><a href='#'>Часто спрашивают</a></Link></li>
                     <li><a href='#'>Обратная связь</a></li>
                     <li><a href='#'>Контакты</a></li>
                 </ul>

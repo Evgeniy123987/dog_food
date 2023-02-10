@@ -4,7 +4,7 @@ import Logo from '../../../assets/image/logo_dogFood.svg';
 import Search from '../../../assets/image/ic-search.svg';
 import Like from '../../../assets/image/save.svg'
 import { HeartOutlined, ShoppingOutlined, SmileOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 
 import { CardContext } from '../../../context/cardContext';
@@ -19,7 +19,8 @@ export function Header({ changeInput, user, onUpdateUser }, params) {
 
   const {favorites} = useContext(CardContext)
   const favNamber = favorites.length
-  console.log(favNamber)
+
+  const location = useLocation()
 
   return (
     <header className='header'>
@@ -40,10 +41,12 @@ export function Header({ changeInput, user, onUpdateUser }, params) {
           <button className='btn' onClick={handleClickButtonEdit}>change</button>
         </div> */}
         </div>
+        {location.pathname === '/' ?
         <form className='search__container'>
           <input className='search__input' placeholder='Поиск' onInput={changeInput}></input>
           <img className='search__icon' src={Search}></img>
-        </form>
+        </form> : ""
+}
         <div className='navi'>
           <div className='navi__container'>
             <Link to={'/favorite'}>

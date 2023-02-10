@@ -2,18 +2,10 @@
 import './App.css';
 import { Header } from './Header/Header.jsx';
 import { Footer } from '../../components/App/Footer/Footer.jsx';
-import { CardList } from '../../components/App/CardList/CardList.jsx';
-import { useContext, useEffect, useState } from 'react';
-import data from '../../assets/data.json';
-import { Games } from './xxx';
+import { useEffect, useState } from 'react';
 import { SearchInfo } from '../App/Search/Search.jsx';
 import api from '../../utils/Api.jsx';
 import useDebounce from '../../hocs/useDebaunce';
-import { CatalogPage } from '../../pages/product/catalog/catalog.jsx';
-import { ProductPage } from '../../pages/product/product.jsx';
-// import { Navigate, Router, Routes } from 'react-router-dom';
-// import { Route } from 'react-router-dom';
-import { NoMatchFound } from '../../pages/NoMatchFound/NoMatchFound';
 import Spinner from '../spinner';
 import { Router } from '../../router/router'
 import { UserContext } from '../../context/userContext';
@@ -26,7 +18,7 @@ function App() {
   const [curentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true)
   const [favorites, setFavorites] = useState([])
-  console.log(favorites)
+
   const debounceSearchQuery = useDebounce(searchQuery, 2000);
 
   const handleRecuest = (eventFromInput) => {
@@ -42,7 +34,8 @@ function App() {
   }, [debounceSearchQuery])
 
   useEffect(() => {
-    Promise.all([api.getProductList(), api.getUserInfo()]).then(([productsData, userData]) => {
+    Promise.all([api.getProductList(), api.getUserInfo()])
+    .then(([productsData, userData]) => {
       setCards(productsData.products);
       setCurrentUser(userData)
       const favProducts = productsData.products.filter((product)=>isLiked(product.likes, userData._id))
@@ -56,7 +49,8 @@ function App() {
   }, [])
 
   const handleFormSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+    console.log(e)
   }
 
   function handleUpdateUser(userUpdateData) {
@@ -94,14 +88,20 @@ function App() {
     cards: cards,
     favorites,
   }
+
+  const userProvider = {
+    curentUser,
+    handleProductLike
+  }
+
   return (
     <>
     <CardContext.Provider value={ valueProvaider }>
-      <UserContext.Provider value={{curentUser: curentUser, handleProductLike: handleProductLike}}>
+      <UserContext.Provider value={userProvider}>
      
         <Header changeInput={handleRecuest} user={curentUser} onUpdateUser={handleUpdateUser} />
         <div className="App">
-        <SearchInfo searchText={handleFormSubmit} searchCount={cards.length} />
+        <SearchInfo searchText={searchQuery} searchCount={cards.length} />
         {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} />
         // <Routes>
         //   <Route path='/' element={
