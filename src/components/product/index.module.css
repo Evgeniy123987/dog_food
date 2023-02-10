@@ -29,6 +29,11 @@
     margin-bottom: 4px;
 }
 
+.product__pictures {
+    width: 500px;
+    height: 500px;
+}
+
 .imgWrapper {
     flex: 1;
     max-width: 300px;

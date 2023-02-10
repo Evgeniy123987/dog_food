@@ -17,13 +17,16 @@ import { NoMatchFound } from '../../pages/NoMatchFound/NoMatchFound';
 import Spinner from '../spinner';
 import { Router } from '../../router/router'
 import { UserContext } from '../../context/userContext';
+import { CardContext } from '../../context/cardContext';
+import { isLiked } from '../../utils/utils';
 
 function App() {
   const [cards, setCards] = useState([]);
   const [searchQuery, setSearcQuery] = useState('');
   const [curentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true)
-
+  const [favorites, setFavorites] = useState([])
+  console.log(favorites)
   const debounceSearchQuery = useDebounce(searchQuery, 2000);
 
   const handleRecuest = (eventFromInput) => {
@@ -42,6 +45,10 @@ function App() {
     Promise.all([api.getProductList(), api.getUserInfo()]).then(([productsData, userData]) => {
       setCards(productsData.products);
       setCurrentUser(userData)
+      const favProducts = productsData.products.filter((product)=>isLiked(product.likes, userData._id))
+
+    
+      setFavorites(favProducts)
       setIsLoading(false)
     })
     // api.getProductList().then((data) => setCards(data.products));
@@ -62,11 +69,14 @@ function App() {
   }
 
   function handleProductLike(product) {
-    const liked = product.likes.some((id) => id === curentUser?._id);
+    const liked = isLiked (product.likes, curentUser?._id)
     api.changleLikeProduct(product._id, liked).then((newCard) => {
       const newProducts = cards.map((cardState) => {
         return cardState._id === newCard._id ? newCard : cardState;
       });
+
+      !liked ? (setFavorites((prevState)=>[...prevState, newCard])) : (setFavorites((prevState)=>prevState.filter((cards)=>cards._id !== newCard._id)))
+
       setCards(newProducts);
     })
   }
@@ -80,14 +90,19 @@ function App() {
   //   console.log('№№№№№№№№№№№№№№№№№№№№№№№',searchQuery)
   // }, [searchQuery])
   const context = UserContext;
-
+  const valueProvaider = {
+    cards: cards,
+    favorites,
+  }
   return (
     <>
+    <CardContext.Provider value={ valueProvaider }>
       <UserContext.Provider value={{curentUser: curentUser, handleProductLike: handleProductLike}}>
-      <div className="App">
+     
         <Header changeInput={handleRecuest} user={curentUser} onUpdateUser={handleUpdateUser} />
+        <div className="App">
         <SearchInfo searchText={handleFormSubmit} searchCount={cards.length} />
-        {isLoading ? <Spinner /> : <Router cards={cards} curentUser={curentUser} handleProductLike={handleProductLike} />
+        {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} />
         // <Routes>
         //   <Route path='/' element={
         //     <CatalogPage data={cards} curentUser={curentUser} handleProductLike={handleProductLike} />
@@ -102,9 +117,10 @@ function App() {
         {/* <Navigate to={'product'} replace /> */}
 
         {/* <CardList data={cards} curentUser={curentUser} onProductLike={handleProductLike} /> */}
+        </div>
         <Footer />
-      </div>
       </UserContext.Provider>
+      </CardContext.Provider>
     </>
   );
 }

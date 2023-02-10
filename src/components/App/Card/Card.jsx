@@ -15,7 +15,6 @@ function Card({   name,
     pictures,
     tags,
     likes,
-    // curentUser,
     onProductLike,
     _id,
 }) {
@@ -24,9 +23,6 @@ function Card({   name,
     function handleLikeClick() {
         onProductLike({ _id, likes })
     }
-
-    console.log(instance.curentUser._id)
-    console.log(instance?._id)
 
     const liked = likes.some((_id) => _id === instance.curentUser._id)
 console.log(liked)

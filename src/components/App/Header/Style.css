@@ -26,6 +26,7 @@
     display:flex;
     gap: 1em;
     justify-content:space-between;
+    position: relative;
 }
 .search__container {
     position: relative;
@@ -34,6 +35,23 @@
     position: absolute;
     right: 10px;
     top: 13px;
+}
+
+.counts__likes {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -40%;
+    left: 15%;
+    border: 1px solid rgb(205, 131, 255);
+    border-radius: 50%;
+    background-color: rgb(205, 131, 255);
+    color: white;
+    
+
 }
 
 /* .user__info {

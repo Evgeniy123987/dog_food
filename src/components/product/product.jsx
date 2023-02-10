@@ -13,9 +13,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     const discount_price = Math.round(price - price * discount / 100);
     const isLike = likes.some((id) => id === currentUser?._id);
     const desctiptionHTML = { __html: description }
-    
-    console.log(likes.some((id)=>console.log(id)))
-    console.log(currentUser?._id)
+
     let navigate = useNavigate()
 
     const handleClick = () => {
@@ -41,7 +39,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
         </div>
         <div className={s.product}>
             <div className={s.imgWrapper}>
-                <img src={pictures} alt={`Изображение ${name}`} width="600px" />
+                <img src={pictures} alt={`Изображение ${name}`} className={s.product__pictures} />
             </div>
         </div>
         </div>

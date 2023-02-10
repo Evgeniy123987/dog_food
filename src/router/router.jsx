@@ -4,12 +4,12 @@ import { NoMatchFound } from "../pages/NoMatchFound/NoMatchFound"
 import { CatalogPage } from "../pages/product/catalog/catalog"
 import { ProductPage } from "../pages/product/product"
 
-export const Router = ({ cards, curentUser, handleProductLike })=> {
+export const Router = ({ handleProductLike })=> {
    
     return (
         <Routes>
           <Route path='/' element={
-            <CatalogPage data={cards} curentUser={curentUser} handleProductLike={handleProductLike} />
+            <CatalogPage handleProductLike={handleProductLike} />
           }>
           </Route>
           <Route path='/product' element={<ProductPage />}></Route>
