@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../form/index.css'
 
-export const Form = ()=>{
+export const Form = ({addContact})=>{
 
     const [contactInfo, setContactInfo] = useState({
         name: '',
@@ -17,6 +17,7 @@ export const Form = ()=>{
         console.log(e)
         e.preventDefault()
         console.log(contactInfo)
+        addContact(contactInfo)
     }
 
     return (

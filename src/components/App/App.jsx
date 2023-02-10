@@ -1,4 +1,3 @@
-
 import './App.css';
 import { Header } from './Header/Header.jsx';
 import { Footer } from '../../components/App/Footer/Footer.jsx';
@@ -18,6 +17,7 @@ function App() {
   const [curentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true)
   const [favorites, setFavorites] = useState([])
+  const [contacts, setContacts] = useState([])
 
   const debounceSearchQuery = useDebounce(searchQuery, 2000);
 
@@ -94,6 +94,10 @@ function App() {
     handleProductLike
   }
 
+  const addContact = (contact) => {
+    setContacts([...contacts, contact])
+  }
+
   return (
     <>
     <CardContext.Provider value={ valueProvaider }>
@@ -102,7 +106,7 @@ function App() {
         <Header changeInput={handleRecuest} user={curentUser} onUpdateUser={handleUpdateUser} />
         <div className="App">
         <SearchInfo searchText={searchQuery} searchCount={cards.length} />
-        {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} />
+        {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact}/>
         // <Routes>
         //   <Route path='/' element={
         //     <CatalogPage data={cards} curentUser={curentUser} handleProductLike={handleProductLike} />
@@ -118,6 +122,13 @@ function App() {
 
         {/* <CardList data={cards} curentUser={curentUser} onProductLike={handleProductLike} /> */}
         </div>
+        {!!contacts.length && contacts.map((el)=>(
+          <div>
+            <p>{el.name}</p>
+            <p>{el.lastName}</p>
+            <p>{el.phoneNamber}</p>
+          </div>
+        ))}
         <Footer />
       </UserContext.Provider>
       </CardContext.Provider>

@@ -6,7 +6,7 @@ import { CatalogPage } from "../pages/product/catalog/catalog"
 import { ProductPage } from "../pages/product/product"
 import { Form } from '../components/form/form'
 
-export const Router = ({ handleProductLike })=> {
+export const Router = ({ handleProductLike, addContact })=> {
    
     return (
         <Routes>
@@ -18,7 +18,7 @@ export const Router = ({ handleProductLike })=> {
           <Route path='/product/:productId' element={<ProductPage />}></Route>
           <Route path='/favorite' element={<Favorite />} />
           <Route path="/faq" element={<FaqPage />}></Route>
-          <Route path="/form" element={<Form />}></Route>
+          <Route path="/form" element={<Form addContact={addContact}/>}></Route>
           <Route path='*' element={<NoMatchFound />}></Route>
           
         </Routes>

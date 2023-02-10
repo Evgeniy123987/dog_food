@@ -22,3 +22,15 @@ li {
 a {
     text-decoration: none;
 }
+
+.footer__icon {
+    padding: 0 5px;
+    size: 100px;
+    opacity: 0.5;
+    color: black;
+
+}
+
+.navi__container-footer {
+    padding: 5px 0;
+}

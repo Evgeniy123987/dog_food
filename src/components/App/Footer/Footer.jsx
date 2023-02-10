@@ -3,7 +3,11 @@ import Like from '../../../assets/image/save.svg';
 import Logo from '../../../assets/image/logo_dogFood.svg';
 import '../Footer/Style.css';
 import { Link } from "react-router-dom";
-
+import TelegramIcon from '@mui/icons-material/Telegram';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import Viber from './img/viber.svg'
+import Vk from './img/vk.svg'
 
 export function Footer (params) {
     return (
@@ -36,12 +40,12 @@ export function Footer (params) {
                     <h3><a href='#'>Мы на связи</a></h3>
                     <a href='tel:+7 (999) 999-99-99'>+7 (999) 999-99-99</a>
                     <a href='#'>dogfood.ru@gmail.com</a>
-                    <div className='navi__container'>
-                    <a href='#'><i class="fa-brands fa-telegram"></i></a>
-                    <a href='#'><img src={Like}></img></a>
-                    <a href='#'><img src={Like}></img></a>
-                    <a href='#'><img src={Like}></img></a>
-                    <a href='#'><img src={Like}></img></a>
+                    <div className='navi__container-footer'>
+                    <a href='#'><TelegramIcon className='footer__icon' /></a>
+                    <a href='#'><WhatsAppIcon className='footer__icon' /></a>
+                    <a href='#'><img className='footer__icon' src={Viber}></img></a>
+                    <a href='#'><InstagramIcon className='footer__icon' /></a>
+                    <a href='#'><img className='footer__icon' src={Vk}></img></a>
                     </div>
                 </div>
             </div>
