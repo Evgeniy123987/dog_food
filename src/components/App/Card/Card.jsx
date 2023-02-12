@@ -25,7 +25,6 @@ function Card({   name,
     }
 
     const liked = likes.some((_id) => _id === instance.curentUser._id)
-console.log(liked)
     const numberLike = likes.length
 
     const discount_price = Math.round(price - price * discount / 100);

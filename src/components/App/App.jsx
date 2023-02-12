@@ -10,6 +10,9 @@ import { Router } from '../../router/router'
 import { UserContext } from '../../context/userContext';
 import { CardContext } from '../../context/cardContext';
 import { isLiked } from '../../utils/utils';
+import { Modal } from '../modal/modal';
+import { Form } from 'react-router-dom';
+import { RegistrationForm } from '../form/registrationForm';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -18,12 +21,18 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [favorites, setFavorites] = useState([])
   const [contacts, setContacts] = useState([])
+  const [activeModal, setActiveModal] = useState(false)
 
   const debounceSearchQuery = useDebounce(searchQuery, 2000);
 
   const handleRecuest = (eventFromInput) => {
     setSearcQuery(eventFromInput.target.value);
   }
+
+  useEffect (()=>{
+    // setActive(true)
+    setActiveModal(false)
+}, [])
 
   useEffect(() => {
     api.search(searchQuery.toUpperCase())
@@ -97,15 +106,18 @@ function App() {
   const addContact = (contact) => {
     setContacts([...contacts, contact])
   }
-
+console.log(setActiveModal)
   return (
     <>
     <CardContext.Provider value={ valueProvaider }>
       <UserContext.Provider value={userProvider}>
      
-        <Header changeInput={handleRecuest} user={curentUser} onUpdateUser={handleUpdateUser} />
+        <Header changeInput={handleRecuest} user={curentUser} onUpdateUser={handleUpdateUser} setActiveModal={setActiveModal} />
         <div className="App">
         <SearchInfo searchText={searchQuery} searchCount={cards.length} />
+        {/* <Form /> */}
+        {/* <RegistrationForm addContact={addContact}/> */}
+        <Modal activeModal={activeModal} setActiveModal={setActiveModal}><RegistrationForm addContact={addContact}/></Modal>
         {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact}/>
         // <Routes>
         //   <Route path='/' element={

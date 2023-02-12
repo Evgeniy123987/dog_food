@@ -10,7 +10,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { CardContext } from '../../../context/cardContext';
 
 
-export function Header({ changeInput, user, onUpdateUser }, params) {
+export function Header({ changeInput, user, onUpdateUser, setActiveModal }, params) {
 
   const handleClickButtonEdit = (e) => {
     e.preventDefault()
@@ -21,7 +21,6 @@ export function Header({ changeInput, user, onUpdateUser }, params) {
   const favNamber = favorites.length
 
   const location = useLocation()
-
   return (
     <header className='header'>
       <div className='header__container'>
@@ -55,6 +54,7 @@ export function Header({ changeInput, user, onUpdateUser }, params) {
             </Link>
             <a href='#'><ShoppingOutlined className='header__icon-smyle' /></a>
             <a href='#'><SmileOutlined className='header__icon-smyle' /></a>
+            <span style={{cursor: 'pointer'}} onClick={()=>setActiveModal(true) }>Вход</span>
           </div>
         </div>
       </div>

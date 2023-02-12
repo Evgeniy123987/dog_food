@@ -1,0 +1,16 @@
+.form__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    padding: 5px;
+    margin: 5px 0;
+    width: 300px;
+}
+
+.button {
+    padding: 5px;
+    margin: 5px 0;
+    width: 315px;
+}

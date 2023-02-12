@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import '../form/index.css'
+import s from '../form/index.module.css'
 
 export const Form = ({addContact})=>{
 
@@ -21,12 +21,12 @@ export const Form = ({addContact})=>{
     }
 
     return (
-        <form onSubmit={handleSubmit} className='form__container'>
+        <form onSubmit={handleSubmit} className={s.form__container}>
             <h3>Введите данные</h3>
-            <input className='form' type='text' name='name' placeholder='Имя' onInput={handleChange} />
-            <input className='form' type='text' name='lastName' placeholder='Фамилия' onInput={handleChange} />
-            <input className='form' type='number' name='phoneNamber' placeholder='Телефон' onInput={handleChange} />
-            <button className='button'>Отправить</button>
+            <input className={s.form} type='text' name='name' placeholder='Имя' onInput={handleChange} />
+            <input className={s.form} type='text' name='lastName' placeholder='Фамилия' onInput={handleChange} />
+            <input className={s.form} type='number' name='phoneNamber' placeholder='Телефон' onInput={handleChange} />
+            <button className={s.button}>Отправить</button>
         </form>
     )
 }
