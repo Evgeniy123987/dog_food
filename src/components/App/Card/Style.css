@@ -41,6 +41,7 @@
 }
 
 .card__favorite {
+    cursor: pointer;
     border: none;
     outline: none;
     background: none;
@@ -54,7 +55,8 @@
 
 .card__favorite_is-active svg {
     fill:#F44336;
-    stroke-width: 0px;
+    stroke: #F44336;
+    /* stroke-width: 0px; */
 }
 
 .like {

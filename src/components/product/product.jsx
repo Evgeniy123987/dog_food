@@ -7,7 +7,6 @@ import quality from './img/quality.svg'
 import truck from './img/truck.svg'
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 
-
 export const Product = ({ pictures, name, price, discount, onProductLike, likes = [], currentUser,
     description }) => {
     const discount_price = Math.round(price - price * discount / 100);
@@ -17,7 +16,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     let navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/')
+        navigate(-1)
     }
 
     const location = useLocation()
@@ -50,7 +49,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
                 <div className={s.left}>
                     <button className={s.minus}>-</button>
                     <span className={s.num}>0</span>
-                    <button className={s.plus} y>+</button>
+                    <button className={s.plus}>+</button>
                 </div>
                 <a href="/#" className={cn('btn', 'btn_type_primary', s.card)}>В корзину</a>
             </div>

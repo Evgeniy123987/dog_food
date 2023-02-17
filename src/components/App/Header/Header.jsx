@@ -1,21 +1,18 @@
-import React, { useContext } from 'react';
-import './Style.css';
-import Logo from '../../../assets/image/logo_dogFood.svg';
-import Search from '../../../assets/image/ic-search.svg';
-import Like from '../../../assets/image/save.svg'
-import { HeartOutlined, ShoppingOutlined, SmileOutlined } from '@ant-design/icons';
-import { Link, useLocation } from 'react-router-dom';
-
-
-import { CardContext } from '../../../context/cardContext';
+import React, { useContext } from 'react'
+import './Style.css'
+import Logo from '../../../assets/image/logo_dogFood.svg'
+import Search from '../../../assets/image/ic-search.svg'
+import { HeartOutlined, ShoppingOutlined, SmileOutlined } from '@ant-design/icons'
+import { Link, useLocation } from 'react-router-dom'
+import { CardContext } from '../../../context/cardContext'
 
 
 export function Header({ changeInput, user, onUpdateUser, setActiveModal }, params) {
 
-  const handleClickButtonEdit = (e) => {
-    e.preventDefault()
-    onUpdateUser({ about: 'писатель', name: 'jon' })
-  }
+  // const handleClickButtonEdit = (e) => {
+  //   e.preventDefault()
+  //   onUpdateUser({ about: 'писатель', name: 'jon' })
+  // }
 
   const {favorites} = useContext(CardContext)
   const favNamber = favorites.length
@@ -24,12 +21,7 @@ export function Header({ changeInput, user, onUpdateUser, setActiveModal }, para
   return (
     <header className='header'>
       <div className='header__container'>
-        {/* {user&& <span>{user.email}</span>}
-              {user&& <span>{user.name}</span>} */}
-
-        {/* <span>{user?.email}</span>
-        <span>{user?.name}</span>
-        <button className='btn' onClick={handleClickButtonEdit}>change</button> */}
+  
         <div className='logo__conteiner'>
           <Link to={'/'}>
           <img className='logo' src={Logo}></img>

@@ -1,0 +1,16 @@
+.box__sort {
+    display: flex;
+    box-shadow: 5px 5px 10px 5px rgb(226, 226, 226);
+    border-radius: 5px;
+    margin: 15px;
+}
+
+.box__sort-button {
+    padding: 10px;
+    cursor: pointer;
+} 
+
+/* .box__sort-li:hover {
+    font-size: large;
+} */
+

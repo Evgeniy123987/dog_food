@@ -196,6 +196,7 @@
 
 .favoriteActive svg {
     fill: #fa0202;
+    stroke: #fa0202;
 }
 
 @media (max-width: 1000px) {

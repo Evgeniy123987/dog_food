@@ -1,4 +1,3 @@
-
 import { red } from '@mui/material/colors'
 import { useForm } from 'react-hook-form'
 import s from '../form/index.module.css'

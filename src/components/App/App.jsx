@@ -1,18 +1,17 @@
-import './App.css';
-import { Header } from './Header/Header.jsx';
-import { Footer } from '../../components/App/Footer/Footer.jsx';
-import { useEffect, useState } from 'react';
-import { SearchInfo } from '../App/Search/Search.jsx';
-import api from '../../utils/Api.jsx';
-import useDebounce from '../../hocs/useDebaunce';
-import Spinner from '../spinner';
+import './App.css'
+import { Header } from './Header/Header.jsx'
+import { Footer } from '../../components/App/Footer/Footer.jsx'
+import { useEffect, useState } from 'react'
+import { SearchInfo } from '../App/Search/Search.jsx'
+import api from '../../utils/Api.jsx'
+import useDebounce from '../../hook/useDebaunce'
+import Spinner from '../spinner'
 import { Router } from '../../router/router'
-import { UserContext } from '../../context/userContext';
-import { CardContext } from '../../context/cardContext';
-import { isLiked } from '../../utils/utils';
-import { Modal } from '../modal/modal';
-import { Form } from 'react-router-dom';
-import { RegistrationForm } from '../form/registrationForm';
+import { UserContext } from '../../context/userContext'
+import { CardContext } from '../../context/cardContext'
+import { isLiked } from '../../utils/utils'
+import { Modal } from '../modal/modal'
+import { RegistrationForm } from '../form/registrationForm'
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -25,6 +24,11 @@ function App() {
 
   const debounceSearchQuery = useDebounce(searchQuery, 2000);
 
+  const checkCardLocal = (i) => {
+    return new Date(i.created_at) < new Date(
+    "2022-04-12T10:36:12.324Z")
+  }
+  
   const handleRecuest = (eventFromInput) => {
     setSearcQuery(eventFromInput.target.value);
   }
@@ -37,7 +41,7 @@ function App() {
   useEffect(() => {
     api.search(searchQuery.toUpperCase())
       .then((cardsFromApi) => {
-        setCards(cardsFromApi)
+        setCards(cardsFromApi.filter((e)=>checkCardLocal(e)))
         // .catch((err) => console.log(err))
       })
   }, [debounceSearchQuery])
@@ -45,27 +49,22 @@ function App() {
   useEffect(() => {
     Promise.all([api.getProductList(), api.getUserInfo()])
     .then(([productsData, userData]) => {
-      setCards(productsData.products);
+      setCards(productsData.products.filter((e)=>checkCardLocal(e)));
       setCurrentUser(userData)
       const favProducts = productsData.products.filter((product)=>isLiked(product.likes, userData._id))
 
-    
       setFavorites(favProducts)
       setIsLoading(false)
     })
-    // api.getProductList().then((data) => setCards(data.products));
-    // api.getUserInfo().then((userData) => setCurrentUser(userData))
   }, [])
 
-  const handleFormSubmit = (e) => {
-    // e.preventDefault();
-    console.log(e)
-  }
+  // const handleFormSubmit = (e) => {
+  //   // e.preventDefault();
+  // }
 
   function handleUpdateUser(userUpdateData) {
     api.setUserInfo(userUpdateData)
       .then(newUser => {
-        console.log({ newUser });
         setCurrentUser(newUser)
 
       })
@@ -85,17 +84,35 @@ function App() {
   }
 
   // useEffect(() => {
-  //   // const filteredCards = [].filter((item) =>
-  //   //   item.name.toUpperCase().includes(searchQuery.toUpperCase()));
-  //   // setCards([...filteredCards]);
+  //   const filteredCards = [].filter((item) =>
+  //     item.name.toUpperCase().includes(searchQuery.toUpperCase()));
+  //   setCards([...filteredCards]);
 
   //   handleRecuest()
   //   console.log('№№№№№№№№№№№№№№№№№№№№№№№',searchQuery)
   // }, [searchQuery])
+
+  const sortedData = (currentSort)=>{
+    switch (currentSort) {
+      case 'expensiv': setCards([...cards.sort((a,b)=>b.price - a.price)]); break
+      case 'cheep': setCards([...cards.sort((a,b)=>a.price - b.price)]); break
+      case 'rayting': setCards([...cards.sort((a,b)=>b.likes.length - a.likes.length)]); break
+      case 'discount': setCards([...cards.sort((a,b)=>b.discount - a.discount)]); break
+      case 'top': setCards([...cards.sort((a,b)=>b.likes.length - a.likes.length)]); break
+      case 'nowelties': setCards([...cards.sort((a,b)=>new Date(b.created_at) - new Date(a.created_at))]); break
+
+      default:
+        setCards([...cards.sort((a,b)=>a.price - b.price)])
+        break;
+    }
+  }
+  
   const context = UserContext;
   const valueProvaider = {
     cards: cards,
     favorites,
+    // setCurrentSort,
+    onSortData: sortedData
   }
 
   const userProvider = {
@@ -106,7 +123,6 @@ function App() {
   const addContact = (contact) => {
     setContacts([...contacts, contact])
   }
-console.log(setActiveModal)
   return (
     <>
     <CardContext.Provider value={ valueProvaider }>
@@ -118,18 +134,7 @@ console.log(setActiveModal)
         {/* <Form /> */}
         {/* <RegistrationForm addContact={addContact}/> */}
         <Modal activeModal={activeModal} setActiveModal={setActiveModal}><RegistrationForm addContact={addContact}/></Modal>
-        {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact}/>
-        // <Routes>
-        //   <Route path='/' element={
-        //     <CatalogPage data={cards} curentUser={curentUser} handleProductLike={handleProductLike} />
-        //   }>
-        //   </Route>
-        //   <Route path='/product' element={<ProductPage />}></Route>
-        //   <Route path='/product/:productId' element={<ProductPage />}></Route>
-        //   <Route path='*' element={<NoMatchFound />}></Route>
-          
-        // </Routes>
-        }
+        {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact}/>}
         {/* <Navigate to={'product'} replace /> */}
 
         {/* <CardList data={cards} curentUser={curentUser} onProductLike={handleProductLike} /> */}

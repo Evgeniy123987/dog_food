@@ -4,6 +4,7 @@
     background-color: #FFE44D;
     padding: 16px 20px;
 }
+
 .header__container {
     display: flex;
     justify-content:space-around;
@@ -22,15 +23,18 @@
     border-style:none;
     border-radius: 50px;
 }
+
 .navi__container {
     display:flex;
     gap: 1em;
     justify-content:space-between;
     position: relative;
 }
+
 .search__container {
     position: relative;
 }
+
 .search__icon {
     position: absolute;
     right: 10px;

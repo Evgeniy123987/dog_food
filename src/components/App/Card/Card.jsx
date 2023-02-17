@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import { useState } from "react";
-import Like from '../../../assets/image/save.svg';
 import '../Card/Style.css';
 import cn from 'classnames';
 import { ReactComponent as Save } from '../../../assets/image/save.svg';
@@ -39,7 +37,6 @@ function Card({   name,
 
             <div className='card__stycki_top-right'>
                 <button className={cn('card__favorite', { 'card__favorite_is-active': liked })} onClick={handleLikeClick}>
-                    {/* <img className='like' src={Like}/> */}
                     <Save className='card__favorite-icon' />
                 </button>
                 <span className="number__like">{numberLike}</span>

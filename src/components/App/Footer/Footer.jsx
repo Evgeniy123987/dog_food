@@ -1,5 +1,4 @@
 import React from "react";
-import Like from '../../../assets/image/save.svg';
 import Logo from '../../../assets/image/logo_dogFood.svg';
 import '../Footer/Style.css';
 import { Link } from "react-router-dom";
@@ -11,7 +10,7 @@ import Vk from './img/vk.svg'
 
 export function Footer (params) {
     return (
-        <header className='footer'>
+        <footer className='footer'>
             <div className='footer__container'>
 
                 <div className='logo__conteiner'>
@@ -31,7 +30,7 @@ export function Footer (params) {
             <div className='footer__group'>
             <ul>
                     <li><a href='#'>Оплата и доставка</a></li>
-                    <li><Link to={'/faq'}><a href='#'>Часто спрашивают</a></Link></li>
+                    <li><Link to={'/faq'}>Часто спрашивают</Link></li>
                     <li><a href='#'>Обратная связь</a></li>
                     <li><a href='#'>Контакты</a></li>
                 </ul>
@@ -50,6 +49,6 @@ export function Footer (params) {
                 </div>
             </div>
             
-        </header>
+        </footer>
     )
 }

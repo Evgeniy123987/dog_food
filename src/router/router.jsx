@@ -4,8 +4,6 @@ import { Favorite } from "../pages/favorites/favoretes"
 import { NoMatchFound } from "../pages/NoMatchFound/NoMatchFound"
 import { CatalogPage } from "../pages/product/catalog/catalog"
 import { ProductPage } from "../pages/product/product"
-import { Form } from '../components/form/form'
-import { RegistrationForm } from "../components/form/registrationForm"
 
 export const Router = ({ handleProductLike, addContact })=> {
    
@@ -15,11 +13,9 @@ export const Router = ({ handleProductLike, addContact })=> {
             <CatalogPage handleProductLike={handleProductLike} />
           }>
           </Route>
-          <Route path='/product' element={<ProductPage />}></Route>
           <Route path='/product/:productId' element={<ProductPage />}></Route>
           <Route path='/favorite' element={<Favorite />} />
           <Route path="/faq" element={<FaqPage />}></Route>
-          {/* <Route path="/form" element={<RegistrationForm addContact={addContact}/>}></Route> */}
           <Route path='*' element={<NoMatchFound />}></Route>
           
         </Routes>

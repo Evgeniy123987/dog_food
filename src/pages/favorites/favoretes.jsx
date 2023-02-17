@@ -7,8 +7,6 @@ export const Favorite = () => {
 
     const {favorites} = useContext(CardContext)
     const {handleProductLike} = useContext(UserContext)
-
-    console.log(favorites, handleProductLike)
     
     return (
         <>

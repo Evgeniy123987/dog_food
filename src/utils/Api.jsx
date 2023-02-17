@@ -6,7 +6,6 @@ class Api {
     }
 
     getProductList() {
-        console.log(this._nameProject, 'GET getProductList')
         return fetch(`${this._baseUrl}/products`, { headers: this._headers }).then(
             onResponse
         ).catch((e) => {
@@ -15,7 +14,6 @@ class Api {
     }
 
     getUserInfo() {
-        console.log(this._nameProject, 'GET getUserInfo')
         return fetch(`${this._baseUrl}/users/me`, { headers: this._headers }).then(
             onResponse
         ).catch((e) => {
@@ -23,7 +21,6 @@ class Api {
         });
     }
     search(searchQuery) {
-        console.log(this._nameProject, '!!!!!!!!!!!!!!!!! GET searchQuery')
         return fetch(`${this._baseUrl}/products/search?query=${searchQuery}`, { headers: this._headers }).then(
             onResponse
         ).catch((e) => {

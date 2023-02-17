@@ -15,8 +15,6 @@
 	position: relative;
 }
 
-
-/* Horizontal line */
 .accordionButton::before {
 	content: '';
 	width: 14px;
@@ -29,7 +27,6 @@
 	transition: all 0.3s;
   }
 
-  /* Vertical line */
   .accordionButton::after {
 	content: '';
 	width: 2px;
