@@ -7,10 +7,12 @@
 
 .box__sort-button {
     padding: 10px;
-    cursor: pointer;
+    color: #ACB9BE;
 } 
 
-/* .box__sort-li:hover {
-    font-size: large;
-} */
+.box__sort-button:hover {
+    cursor: pointer;
+    color: black;
+}
+
 
