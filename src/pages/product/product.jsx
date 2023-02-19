@@ -21,6 +21,8 @@ export const ProductPage = () => {
 
   const debounceSearchQuery = useDebounce(searchQuery, 2000);
 
+  const fav = useContext(UserContext)
+
   useEffect(() => {
     api.search(searchQuery.toUpperCase())
       .then((cardsFromApi) => {
@@ -29,8 +31,6 @@ export const ProductPage = () => {
       })
   }, [debounceSearchQuery])
 
-  // console.log({cardsFromApi})
-
   useEffect(() => {
     setIsLoading(true);
     api.getUserInfo().then((userData) => setCurrentUser(userData));
@@ -38,12 +38,14 @@ export const ProductPage = () => {
       .then((productData) => setProduct(productData))
       // .catch((err) => console.log('err', err))
       .finally(() => setIsLoading(false))
-  }, [productId])
+  }, [productId, fav.favorites])
+
+  console.log(fav.favorites)
 
   const onProductLike = () => { 
     handleProductLike(product)
   }
-
+  console.log(product)
   return <>
     <div className="App">
       {isLoading ? <Spinner /> : <Product {...product} currentUser={currentUser} onProductLike={onProductLike} />}

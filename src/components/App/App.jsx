@@ -117,7 +117,8 @@ function App() {
 
   const userProvider = {
     curentUser,
-    handleProductLike
+    handleProductLike,
+    favorites
   }
 
   const addContact = (contact) => {
