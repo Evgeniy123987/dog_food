@@ -17,6 +17,7 @@
 }
 
 .search__input {
+    outline: none;
     width: 350px;
     height: 50px;
     padding: 0px 14px;

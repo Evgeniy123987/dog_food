@@ -6,6 +6,7 @@ import { ReactComponent as Save } from "./img/save.svg"
 import quality from './img/quality.svg'
 import truck from './img/truck.svg'
 import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { Rating } from "@mui/material"
 
 export const Product = ({ pictures, name, price, discount, onProductLike, likes = [], currentUser,
     description }) => {
@@ -34,6 +35,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             <h1 className={s.productTitle}>{name}</h1>
             <div>
                 <span>артикул: </span><b>23890</b>
+                <Rating />
             </div>
         </div>
         <div className={s.product}>

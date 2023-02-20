@@ -12,6 +12,10 @@ import { CardContext } from '../../context/cardContext'
 import { isLiked } from '../../utils/utils'
 import { Modal } from '../modal/modal'
 import { RegistrationForm } from '../form/registrationForm'
+import { Login } from '../login/login'
+import { Register } from '../register/register'
+import { Reset } from '../resetPassword/resetPassword'
+import { Route, Routes } from 'react-router-dom'
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -131,15 +135,35 @@ function App() {
      
         <Header changeInput={handleRecuest} user={curentUser} onUpdateUser={handleUpdateUser} setActiveModal={setActiveModal} />
         <div className="App">
+        <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+          <Login />
+        </Modal>
         <SearchInfo searchText={searchQuery} searchCount={cards.length} />
         {/* <Form /> */}
         {/* <RegistrationForm addContact={addContact}/> */}
-        <Modal activeModal={activeModal} setActiveModal={setActiveModal}><RegistrationForm addContact={addContact}/></Modal>
         {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact}/>}
         {/* <Navigate to={'product'} replace /> */}
 
         {/* <CardList data={cards} curentUser={curentUser} onProductLike={handleProductLike} /> */}
         </div>
+        {/* <Routes>
+        <Route path='/login' element={<Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+          <Login />
+        </Modal>}>
+        </Route>
+
+        <Route path='/register' element={ <Modal 
+        activeModal={activeModal} setActiveModal={setActiveModal}>
+          <Register />
+        </Modal>}>
+        </Route>
+
+        <Route path='/reset' element={ <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+          <Reset />
+        </Modal>}>
+        </Route>
+        </Routes> */}
+
         {!!contacts.length && contacts.map((el)=>(
           <div>
             <p>{el.name}</p>
