@@ -43,7 +43,7 @@ function App() {
 }, [])
 
   useEffect(() => {
-    api.search(searchQuery.toUpperCase())
+    searchQuery && api.search(searchQuery.toUpperCase())
       .then((cardsFromApi) => {
         setCards(cardsFromApi.filter((e)=>checkCardLocal(e)))
         // .catch((err) => console.log(err))
@@ -128,6 +128,7 @@ function App() {
   const addContact = (contact) => {
     setContacts([...contacts, contact])
   }
+
   return (
     <>
     <CardContext.Provider value={ valueProvaider }>
@@ -138,10 +139,10 @@ function App() {
         <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
           <Login />
         </Modal>
-        <SearchInfo searchText={searchQuery} searchCount={cards.length} />
+        <SearchInfo searchText={searchQuery} searchCount={cards.length} debounceSearchQuery={debounceSearchQuery}/>
         {/* <Form /> */}
         {/* <RegistrationForm addContact={addContact}/> */}
-        {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact}/>}
+        {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact} curentUser={curentUser} />}
         {/* <Navigate to={'product'} replace /> */}
 
         {/* <CardList data={cards} curentUser={curentUser} onProductLike={handleProductLike} /> */}

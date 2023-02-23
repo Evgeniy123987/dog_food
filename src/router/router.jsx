@@ -5,7 +5,7 @@ import { NoMatchFound } from "../pages/NoMatchFound/NoMatchFound"
 import { CatalogPage } from "../pages/product/catalog/catalog"
 import { ProductPage } from "../pages/product/product"
 
-export const Router = ({ handleProductLike, addContact })=> {
+export const Router = ({ handleProductLike, addContact, curentUser })=> {
    
     return (
         <Routes>
@@ -13,7 +13,7 @@ export const Router = ({ handleProductLike, addContact })=> {
             <CatalogPage handleProductLike={handleProductLike} />
           }>
           </Route>
-          <Route path='/product/:productId' element={<ProductPage />}></Route>
+          <Route path='/product/:productId' element={<ProductPage curentUser={curentUser}/>}></Route>
           <Route path='/favorite' element={<Favorite />} />
           <Route path="/faq" element={<FaqPage />}></Route>
           <Route path='*' element={<NoMatchFound />}></Route>

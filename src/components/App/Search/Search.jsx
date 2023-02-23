@@ -1,14 +1,14 @@
 import { useLocation } from 'react-router-dom'
 import '../Search/Style.css'
 
-export const SearchInfo = ({ searchText, searchCount }) => {
+export const SearchInfo = ({ searchText, searchCount, debounceSearchQuery }) => {
 
-    const location =useLocation()
+    const location = useLocation()
 
     return (
         <>
         {location.pathname === '/' ? (searchText && <section className='search__title'>
-            По запросу <span className='search__bold'>{searchText}</span> найдено <span className='search__bold'>{searchCount}</span> товаров
+            По запросу <span className='search__bold'>{searchText}</span> найдено <span className='search__bold'>{debounceSearchQuery ? searchCount : ''}</span> товаров
         </section>) : ''}
         </>
     )

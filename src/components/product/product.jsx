@@ -7,6 +7,8 @@ import quality from './img/quality.svg'
 import truck from './img/truck.svg'
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { Rating } from "@mui/material"
+import { UserContext } from "../../context/userContext"
+import { useContext } from "react"
 
 export const Product = ({ pictures, name, price, discount, onProductLike, likes = [], currentUser,
     description }) => {

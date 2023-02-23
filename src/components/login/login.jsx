@@ -34,7 +34,6 @@ export const Login = () => {
     const handleFormSubmit = (data) => {
         console.log(data)
     }
-    console.log({errors})
 
     return(
         <>
