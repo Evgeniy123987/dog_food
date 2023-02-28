@@ -200,6 +200,20 @@
     stroke: #fa0202;
 }
 
+.reviews__button {
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid gray;
+    background-color: #fff;
+    cursor: pointer;
+    
+}
+
+.reviews__section_line {
+    border: 1px solid rgb(203, 198, 198);
+    width: auto;
+}
+
 @media (max-width: 1000px) {
     .product {
         gap: 20px;

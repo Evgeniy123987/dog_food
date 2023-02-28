@@ -1,5 +1,5 @@
 import cn from "classnames"
-import React from "react"
+import React, { useState } from "react"
 import { useEffect } from "react"
 import s from "./index.module.css"
 import { ReactComponent as Save } from "./img/save.svg"
@@ -9,9 +9,12 @@ import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { Rating } from "@mui/material"
 import { UserContext } from "../../context/userContext"
 import { useContext } from "react"
+import api from '../../../src/utils/Api'
 
 export const Product = ({ pictures, name, price, discount, onProductLike, likes = [], currentUser,
-    description }) => {
+    description, reviews }) => {
+    const [users, setUsers] = useState([])
+
     const discount_price = Math.round(price - price * discount / 100);
     const isLike = likes.some((id) => id === currentUser?._id);
     const desctiptionHTML = { __html: description }
@@ -21,14 +24,28 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     const handleClick = () => {
         navigate(-1)
     }
-
     const location = useLocation()
-
+    
     useEffect(() => {
         location.search.includes('name=dear') ? navigate('/') : console.log('err')
     },[location.search])
 
+    useEffect(()=>{
+        api.getUsers().then((data)=>setUsers(data))
+    },[])
+
+    console.log({users})
+    
     const param = useParams()
+    console.log({reviews})
+
+    const getUser = (id)=>{
+        if (!users.length) return 'User'
+        const user = users.find(el => el._id === id)
+        return user?.name ?? 'User'
+        console.log(user.name)
+    }
+
     return <>
     <button onClick={handleClick} className="button">назад</button>
     <div className={s.product__container}>
@@ -38,6 +55,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             <div>
                 <span>артикул: </span><b>23890</b>
                 <Rating />
+                <span>{reviews?.length}отзывов</span>
             </div>
         </div>
         <div className={s.product}>
@@ -48,7 +66,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
         </div>
         <div className={s.desc}>
             <span className={discount ? s.oldPrice : s.price}>{price}&nbsp;P</span>
-            {discount && (<span className={cn(s.price, 'card__price_type_discount')}>{discount_price}&nbsp;P</span>)}
+            {!!discount && (<span className={cn(s.price, 'card__price_type_discount')}>{discount_price}&nbsp;P</span>)}
             <div className={s.btnWrap}>
                 <div className={s.left}>
                     <button className={s.minus}>-</button>
@@ -109,6 +127,37 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
                     <p>Следует учесть высокую калорийность продукта.</p>
                 </div>
             </div>
+        </div>
+        {/* <div className="reviews__section">
+            <h3 className={s.title}>Отзывы</h3>
+            <button className={s.reviews__button}>Написать отзыв</button>
+            <div className="reviews__photo-section">
+                <h5>Фотографии наших покупателей</h5>
+                <div className="reviews__photo">
+
+                </div>
+            </div>
+            <div className={s.reviews__section_line}></div>
+            <div className="reviews__section-feetback">
+                <h4></h4>
+                <span></span>
+                <Rating />
+                <p></p>
+               
+            </div>
+            <div className="reviews__section-line"></div>
+            <button className={s.reviews__button}>Все отзывы</button>
+        </div> */}
+
+        <div className={s.reviews}>
+            Reviews
+            {reviews?.map((e)=><div>
+                <span>{getUser(e.author)}</span>
+                <span>{e.created_at.slice(0, 10)}</span><br></br>
+                <Rating />
+                <p>{e.text}</p>
+                <div className={s.reviews__section_line}></div>
+            </div>)}
         </div>
     </>
 }

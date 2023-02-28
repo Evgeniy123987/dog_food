@@ -25,6 +25,7 @@ function App() {
   const [favorites, setFavorites] = useState([])
   const [contacts, setContacts] = useState([])
   const [activeModal, setActiveModal] = useState(false)
+  const [reactName, setReactName] = useState('')
 
   const debounceSearchQuery = useDebounce(searchQuery, 2000);
 
@@ -32,18 +33,19 @@ function App() {
     return new Date(i.created_at) < new Date(
     "2022-04-12T10:36:12.324Z")
   }
-  
-  const handleRecuest = (eventFromInput) => {
-    setSearcQuery(eventFromInput.target.value);
-  }
 
+  const handleRecuest = (eventFromInput) => {
+    setSearcQuery(eventFromInput.target.value)
+    setReactName(eventFromInput._reactName)
+  }
+  
   useEffect (()=>{
     // setActive(true)
     setActiveModal(false)
 }, [])
 
   useEffect(() => {
-    searchQuery && api.search(searchQuery.toUpperCase())
+    (searchQuery|| reactName) && api.search(searchQuery.toUpperCase())
       .then((cardsFromApi) => {
         setCards(cardsFromApi.filter((e)=>checkCardLocal(e)))
         // .catch((err) => console.log(err))
@@ -139,7 +141,7 @@ function App() {
         <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
           <Login />
         </Modal>
-        <SearchInfo searchText={searchQuery} searchCount={cards.length} debounceSearchQuery={debounceSearchQuery}/>
+        <SearchInfo searchText={searchQuery} searchCount={cards.length} debounceSearchQuery={debounceSearchQuery} />
         {/* <Form /> */}
         {/* <RegistrationForm addContact={addContact}/> */}
         {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact} curentUser={curentUser} />}
