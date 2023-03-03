@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 import { EMAIL_REGEXP, PASS_REGEXP, VALIDATE_CONFIG } from "../../constants/constants"
+import { authApi } from "../../utils/authApi"
 import { BaseButton } from "../baseButton/baseButton"
 import { Form } from "../form/form"
 import '../login/style.css'
@@ -30,10 +32,17 @@ export const Register = () => {
         }
     })
 
-    const handleFormSubmit = (data) => {
+    const handleFormSubmit = async (data) => {
+        try{
         console.log(data)
+        await authApi.register({...data, group: 'group-9'})
+        navigate('/')
+        } catch (error) {
+            console.log(error)
+        }
     }
-    console.log({errors})
+
+    const navigate = useNavigate()
     return(
         <>
         <Form handleFormSubmit={handleSubmit(handleFormSubmit)} title={"Регистрация"}>
@@ -59,7 +68,7 @@ export const Register = () => {
             </div>
             <div className="login__button">
                 <BaseButton type='submit'>Зарегестрироваться</BaseButton>
-                <BaseButton type='button' onClick={()=>{}} >Войти</BaseButton>
+                <BaseButton type='button' onClick={()=>navigate('/login')} >Войти</BaseButton>
             </div>
         </Form>
         </>

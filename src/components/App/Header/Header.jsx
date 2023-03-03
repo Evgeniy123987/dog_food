@@ -18,6 +18,7 @@ export function Header({ changeInput, user, onUpdateUser, setActiveModal }, para
   const favNamber = favorites.length
 
   const location = useLocation()
+  console.log(!!localStorage.token)
   return (
     <header className='header'>
       <div className='header__container'>
@@ -46,7 +47,13 @@ export function Header({ changeInput, user, onUpdateUser, setActiveModal }, para
             </Link>
             <a href='#'><ShoppingOutlined className='header__icon-smyle' /></a>
             <a href='#'><SmileOutlined className='header__icon-smyle' /></a>
-            <span style={{cursor: 'pointer'}} onClick={()=>setActiveModal(true) }>Вход</span>
+            <Link to="/login" 
+            // state={{backgroundLocation: location, initialPath: location.pathname}}
+            ><span style={{cursor: 'pointer'}} onClick={()=>setActiveModal(true) }>
+              {/* {!!localStorage.token ? "" : "Вход"} */}
+              Вход
+              </span>
+            </Link>
           </div>
         </div>
       </div>

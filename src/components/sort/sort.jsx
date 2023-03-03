@@ -1,11 +1,12 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { CardContext } from '../../context/cardContext'
 import './index.css'
 
 const Sort = () => {
 
     const {onSortData} = useContext(CardContext)
-
+    const [sortedId, setSortedId] = useState('new')
+    
     const tabs = [
         {id: 'top', title: 'Популярные'},
         {id: 'nowelties', title: 'Новинки'},
@@ -16,12 +17,12 @@ const Sort = () => {
     ]
 
     const handleChange = (id)=>{
-        // setCurrentSort(id)
         onSortData(id)
+        setSortedId(id)
     }
 
     return <div className='box__sort'>
-        {tabs.map((tabs)=>(<div className='box__sort-button' onClick={()=>handleChange(tabs.id)}>{tabs.title}</div>))}
+        {tabs.map((tabs)=>(<div className={`box__sort-button ${sortedId === tabs.id ? 'box__sort-black' : ''}`} onClick={()=>handleChange(tabs.id)}>{tabs.title}</div>))}
     </div>
 }
 

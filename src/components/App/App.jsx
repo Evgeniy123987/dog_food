@@ -15,7 +15,7 @@ import { RegistrationForm } from '../form/registrationForm'
 import { Login } from '../login/login'
 import { Register } from '../register/register'
 import { Reset } from '../resetPassword/resetPassword'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -26,6 +26,7 @@ function App() {
   const [contacts, setContacts] = useState([])
   const [activeModal, setActiveModal] = useState(false)
   const [reactName, setReactName] = useState('')
+  const [isAuthentificated, setAuthentificated] = useState(false)
 
   const debounceSearchQuery = useDebounce(searchQuery, 2000);
 
@@ -38,11 +39,13 @@ function App() {
     setSearcQuery(eventFromInput.target.value)
     setReactName(eventFromInput._reactName)
   }
-  
+
   useEffect (()=>{
     // setActive(true)
     setActiveModal(false)
 }, [])
+
+
 
   useEffect(() => {
     (searchQuery|| reactName) && api.search(searchQuery.toUpperCase())
@@ -118,7 +121,7 @@ function App() {
     cards: cards,
     favorites,
     // setCurrentSort,
-    onSortData: sortedData
+    onSortData: sortedData,
   }
 
   const userProvider = {
@@ -131,6 +134,16 @@ function App() {
     setContacts([...contacts, contact])
   }
 
+  
+  const location = useLocation()
+  const backgroundLocation = location.state?.backgroundLocation
+  const initialPath = location.state?.initialPath
+  console.log({location})
+
+  useEffect(()=>{
+
+  }, [])
+
   return (
     <>
     <CardContext.Provider value={ valueProvaider }>
@@ -138,19 +151,10 @@ function App() {
      
         <Header changeInput={handleRecuest} user={curentUser} onUpdateUser={handleUpdateUser} setActiveModal={setActiveModal} />
         <div className="App">
-        <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-          <Login />
-        </Modal>
-        <SearchInfo searchText={searchQuery} searchCount={cards.length} debounceSearchQuery={debounceSearchQuery} />
-        {/* <Form /> */}
-        {/* <RegistrationForm addContact={addContact}/> */}
-        {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact} curentUser={curentUser} />}
-        {/* <Navigate to={'product'} replace /> */}
 
-        {/* <CardList data={cards} curentUser={curentUser} onProductLike={handleProductLike} /> */}
-        </div>
-        {/* <Routes>
-        <Route path='/login' element={<Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+        {/* <Routes location={backgroundLocation && {...backgroundLocation, state:initialPath || location}}>
+          <Route path='/login' element={
+        <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
           <Login />
         </Modal>}>
         </Route>
@@ -166,14 +170,26 @@ function App() {
         </Modal>}>
         </Route>
         </Routes> */}
+        
+        
+        <SearchInfo searchText={searchQuery} searchCount={cards.length} debounceSearchQuery={debounceSearchQuery} />
+        {/* <Form /> */}
+        {/* <RegistrationForm addContact={addContact}/> */}
+        {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact} curentUser={curentUser} 
+        activeModal={activeModal} setActiveModal={setActiveModal} backgroundLocation={backgroundLocation} initialPath={initialPath} />}
+        {/* <Navigate to={'product'} replace /> */}
 
-        {!!contacts.length && contacts.map((el)=>(
+        {/* <CardList data={cards} curentUser={curentUser} onProductLike={handleProductLike} /> */}
+        </div>
+  
+
+        {/* {!!contacts.length && contacts.map((el)=>(
           <div>
             <p>{el.name}</p>
             <p>{el.lastName}</p>
             <p>{el.phoneNamber}</p>
           </div>
-        ))}
+        ))} */}
         <Footer />
       </UserContext.Provider>
       </CardContext.Provider>

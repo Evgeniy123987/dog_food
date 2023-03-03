@@ -6,7 +6,7 @@ import { ReactComponent as Save } from "./img/save.svg"
 import quality from './img/quality.svg'
 import truck from './img/truck.svg'
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { Rating } from "@mui/material"
+import { Rating } from "../rating/rating"
 import { UserContext } from "../../context/userContext"
 import { useContext } from "react"
 import api from '../../../src/utils/Api'
@@ -33,17 +33,13 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     useEffect(()=>{
         api.getUsers().then((data)=>setUsers(data))
     },[])
-
-    console.log({users})
     
     const param = useParams()
-    console.log({reviews})
 
     const getUser = (id)=>{
         if (!users.length) return 'User'
         const user = users.find(el => el._id === id)
         return user?.name ?? 'User'
-        console.log(user.name)
     }
 
     return <>
@@ -54,7 +50,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             <h1 className={s.productTitle}>{name}</h1>
             <div>
                 <span>артикул: </span><b>23890</b>
-                <Rating />
+                <Rating isEditable={true} rating={5} />
                 <span>{reviews?.length}отзывов</span>
             </div>
         </div>
@@ -154,7 +150,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             {reviews?.map((e)=><div>
                 <span>{getUser(e.author)}</span>
                 <span>{e.created_at.slice(0, 10)}</span><br></br>
-                <Rating />
+                <Rating rating={e.rating}/>
                 <p>{e.text}</p>
                 <div className={s.reviews__section_line}></div>
             </div>)}

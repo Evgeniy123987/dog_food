@@ -3,37 +3,41 @@ import {ReactComponent as Star} from "../rating/star.svg"
 import cn from 'classnames'
 import s from './index.module.css'
 
-export const Rating = () => {
+export const Rating = ({rating, isEditable = false}) => {
      const [ratingArr, setRatingArr] = useState(new Array(5).fill(<></>))
-    const [rating, setRating] = useState(1)
+    const [ratingState, setRatingState] = useState(rating)
 
-     const constructorRating = useCallback(()=>{
+     const constructorRating = useCallback((currentRating)=>{
+        console.log(currentRating)
         const updatedArray = ratingArr.map((ratingElement, index)=>{
-            return
+            return(
             <Star 
             className={cn(s.star, {
                 [s.filled]: index < currentRating, 
+                [s.editable]: !isEditable,
             })}
             onMouseEnter={()=>changeDisplay(index + 1)}
-            onMouseleave={()=>changeDisplay(currentRating)}
+            onMouseleave={()=>changeDisplay(ratingState)}
             onClick={()=>changeRating(index+1)}
-            />
+            />)
         })
         setRatingArr(updatedArray)
-     }, [rating, ratingArr])
+     }, [])
 
     const changeDisplay = (rate) => {
+        if (!isEditable) return
         console.log({rate})
         constructorRating(rate)
     }
 
-    const changeRating = (rating) => {
-        setRating(rating)
+    const changeRating = (ratingState) => {
+        if (!isEditable) return
+        setRatingState(ratingState)
     }
 
     useEffect(()=>{
         constructorRating(rating)
-    }, [constructorRating, rating])
+    }, [constructorRating])
     return(
         <div>
             {ratingArr.map((r, i)=>(

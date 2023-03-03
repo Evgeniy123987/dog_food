@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form"
 import { EMAIL_REGEXP, PASS_REGEXP, VALIDATE_CONFIG } from "../../constants/constants"
+import { authApi } from "../../utils/authApi"
 import { BaseButton } from "../baseButton/baseButton"
 import { Form } from "../form/form"
 import '../login/style.css'
@@ -19,8 +20,13 @@ export const Reset = () => {
         }
     })
 
-    const handleFormSubmit = (data) => {
+    const handleFormSubmit = async(data) => {
         console.log(data)
+        try {
+            await authApi.resetPass(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
     console.log({errors})
     return(
