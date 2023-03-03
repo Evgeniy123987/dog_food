@@ -21,7 +21,7 @@ class Api {
     }
 
     resetPass (data) {
-        return fetch(`${this._baseUrl}/password-reset`, {
+        return fetch(`${this._baseUrl}/forgot-password `, {
             headers: this._headers,
             method: 'POST', 
             body: JSON.stringify(data)

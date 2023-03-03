@@ -10,6 +10,9 @@ import { Rating } from "../rating/rating"
 import { UserContext } from "../../context/userContext"
 import { useContext } from "react"
 import api from '../../../src/utils/Api'
+import { Form } from "../form/form"
+import { useForm } from "react-hook-form"
+import { BaseButton } from "../baseButton/baseButton"
 
 export const Product = ({ pictures, name, price, discount, onProductLike, likes = [], currentUser,
     description, reviews }) => {
@@ -41,6 +44,15 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
         const user = users.find(el => el._id === id)
         return user?.name ?? 'User'
     }
+
+    const {
+        register, 
+        handleSubmit, 
+        formState: {errors}} = useForm({mode: 'onChange'})
+
+    const sendReviews = (data) => {
+        console.log(data)
+    }    
 
     return <>
     <button onClick={handleClick} className="button">назад</button>
@@ -146,7 +158,23 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
         </div> */}
 
         <div className={s.reviews}>
-            Reviews
+            <div>Reviews</div>
+            <button className={s.reviews__button} onClick={()=>{}}>Написать отзыв</button>
+            <Form 
+            handleFormSubmit={handleSubmit(sendReviews)} title={"Написать отзыв"}>
+            <div className={s.review__container}>
+            <input
+                {...register}
+                className={s.review__input}
+                type="email"
+                name="email"
+                placeholder="Написать отзыв"
+            />
+            <div className="review__button">
+                <BaseButton type='submit'>Отправить</BaseButton>
+            </div>
+            </div>
+        </Form>
             {reviews?.map((e)=><div>
                 <span>{getUser(e.author)}</span>
                 <span>{e.created_at.slice(0, 10)}</span><br></br>

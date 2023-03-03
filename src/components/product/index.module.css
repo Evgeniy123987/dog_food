@@ -214,6 +214,21 @@
     width: auto;
 }
 
+.review__container {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.review__input {
+    min-height: 50px;
+    margin: 10px;
+}
+
+.review__button {
+    margin: 10px;
+}
+
 @media (max-width: 1000px) {
     .product {
         gap: 20px;
