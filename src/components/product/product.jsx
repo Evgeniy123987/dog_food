@@ -13,10 +13,12 @@ import api from '../../../src/utils/Api'
 import { Form } from "../form/form"
 import { useForm } from "react-hook-form"
 import { BaseButton } from "../baseButton/baseButton"
+import { VALIDATE_CONFIG } from "../../constants/constants"
 
 export const Product = ({ pictures, name, price, discount, onProductLike, likes = [], currentUser,
-    description, reviews }) => {
+    description, reviews, onSendReviews }) => {
     const [users, setUsers] = useState([])
+    const [showForm, setShowForm] = useState(false)
 
     const discount_price = Math.round(price - price * discount / 100);
     const isLike = likes.some((id) => id === currentUser?._id);
@@ -50,9 +52,30 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
         handleSubmit, 
         formState: {errors}} = useForm({mode: 'onChange'})
 
-    const sendReviews = (data) => {
-        console.log(data)
-    }    
+
+        const reviewRegister = register('text', {
+            required: {
+                value: true,
+                message: VALIDATE_CONFIG.requiredMessage
+            },
+            minLength: {value: 4,
+            message: 'минимальное количество символов'}
+            // pattern: {
+            //     value: EMAIL_REGEXP,
+            //     message: VALIDATE_CONFIG.email
+            // }
+        })    
+
+    // const sendReviews = (data) => {
+    //     console.log(data)
+    // }    
+    const formSabmit = () => {
+        setShowForm(true)
+    }
+
+    // const closeForm = () => {
+    //     setShowForm(false)
+    // }
 
     return <>
     <button onClick={handleClick} className="button">назад</button>
@@ -159,23 +182,23 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
 
         <div className={s.reviews}>
             <div>Reviews</div>
-            <button className={s.reviews__button} onClick={()=>{}}>Написать отзыв</button>
+            {!showForm ? <button className={s.reviews__button} onClick={()=>{formSabmit()}}>Написать отзыв</button> :
             <Form 
-            handleFormSubmit={handleSubmit(sendReviews)} title={"Написать отзыв"}>
+            handleFormSubmit={handleSubmit(onSendReviews)} title={"Написать отзыв"}>
             <div className={s.review__container}>
-            <input
-                {...register}
+            <textarea
+                {...reviewRegister}
                 className={s.review__input}
-                type="email"
-                name="email"
+                type="text"
+                name="text"
                 placeholder="Написать отзыв"
             />
-            <div className="review__button">
+            <div className={s.review__button}>
                 <BaseButton type='submit'>Отправить</BaseButton>
             </div>
             </div>
-        </Form>
-            {reviews?.map((e)=><div>
+            </Form>}
+            {reviews?.sort((a, b)=> new Date(b.created_at) - new Date(a.created_at)).map((e)=><div>
                 <span>{getUser(e.author)}</span>
                 <span>{e.created_at.slice(0, 10)}</span><br></br>
                 <Rating rating={e.rating}/>

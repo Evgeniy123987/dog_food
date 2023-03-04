@@ -176,7 +176,8 @@ function App() {
         {/* <Form /> */}
         {/* <RegistrationForm addContact={addContact}/> */}
         {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact} curentUser={curentUser} 
-        activeModal={activeModal} setActiveModal={setActiveModal} backgroundLocation={backgroundLocation} initialPath={initialPath} />}
+        activeModal={activeModal} setActiveModal={setActiveModal} backgroundLocation={backgroundLocation} initialPath={initialPath} 
+        />}
         {/* <Navigate to={'product'} replace /> */}
 
         {/* <CardList data={cards} curentUser={curentUser} onProductLike={handleProductLike} /> */}

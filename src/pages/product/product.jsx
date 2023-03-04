@@ -44,9 +44,21 @@ export const ProductPage = ({curentUser}) => {
     handleProductLike(product)
   }
   console.log(product)
+
+  const onSendReviews = async (data) =>{
+    try {
+      const res = await api.addReview(product._id, data)
+      setProduct({...res})
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+    console.log({data})
+  }
   return <>
     <div className="App">
-      {isLoading ? <Spinner /> : <Product {...product} currentUser={curentUser} onProductLike={onProductLike} />}
+      {isLoading ? <Spinner /> : <Product {...product} currentUser={curentUser} onProductLike={onProductLike} 
+      onSendReviews={onSendReviews} />}
     </div>
   </>
 }
