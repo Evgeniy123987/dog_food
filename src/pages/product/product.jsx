@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom"
 import { Product } from "../../components/product/product.jsx"
 import Spinner from "../../components/spinner/index.jsx"
 import { UserContext } from "../../context/userContext.js"
-import useDebounce from "../../hook/useDebaunce.js"
 import api from "../../utils/Api.jsx"
 
 // const productId = '622c77d477d63f6e70967d1f';
@@ -13,7 +12,7 @@ export const ProductPage = ({curentUser}) => {
 
   // const [cards, setCards] = useState([]);
   // const [searchQuery, setSearcQuery] = useState('');
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const { handleProductLike } = useContext(UserContext)
@@ -43,17 +42,15 @@ export const ProductPage = ({curentUser}) => {
   const onProductLike = () => { 
     handleProductLike(product)
   }
-  console.log(product)
 
   const onSendReviews = async (data) =>{
     try {
       const res = await api.addReview(product._id, data)
       setProduct({...res})
-      console.log(res)
     } catch (error) {
       console.log(error)
     }
-    console.log({data})
+    
   }
   return <>
     <div className="App">

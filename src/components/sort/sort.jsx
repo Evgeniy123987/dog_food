@@ -22,7 +22,7 @@ const Sort = () => {
     }
 
     return <div className='box__sort'>
-        {tabs.map((tabs)=>(<div className={`box__sort-button ${sortedId === tabs.id ? 'box__sort-black' : ''}`} onClick={()=>handleChange(tabs.id)}>{tabs.title}</div>))}
+        {tabs.map((tabs)=>(<div key={tabs.id} className={`box__sort-button ${sortedId === tabs.id ? 'box__sort-black' : ''}`} onClick={()=>handleChange(tabs.id)}>{tabs.title}</div>))}
     </div>
 }
 

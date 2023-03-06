@@ -18,14 +18,14 @@ export function Header({ changeInput, user, onUpdateUser, setActiveModal }, para
   const favNamber = favorites.length
 
   const location = useLocation()
-  console.log(!!localStorage.token)
+  
   return (
     <header className='header'>
       <div className='header__container'>
   
         <div className='logo__conteiner'>
           <Link to={'/'}>
-          <img className='logo' src={Logo}></img>
+          <img className='logo' alt='Logo' src={Logo}></img>
           </Link>
           {/* <div className='user__info'>  
           <span>email: {user?.email}</span><br/>
@@ -36,7 +36,7 @@ export function Header({ changeInput, user, onUpdateUser, setActiveModal }, para
         {location.pathname === '/' ?
         <form className='search__container'>
           <input className='search__input' placeholder='Поиск' onInput={changeInput}></input>
-          <img className='search__icon' src={Search}></img>
+          <img className='search__icon' alt='Search' src={Search}></img>
         </form> : ""
 }
         <div className='navi'>
@@ -45,8 +45,8 @@ export function Header({ changeInput, user, onUpdateUser, setActiveModal }, para
             <HeartOutlined className='header__icon-smyle' />
             <span className={favNamber !==0 ? "counts__likes" : null}>{favNamber !== 0 ? (favNamber) : null}</span>
             </Link>
-            <a href='#'><ShoppingOutlined className='header__icon-smyle' /></a>
-            <a href='#'><SmileOutlined className='header__icon-smyle' /></a>
+            <Link to={'/'}><ShoppingOutlined className='header__icon-smyle' /></Link> 
+            <Link to={'/'}><SmileOutlined className='header__icon-smyle' /></Link> 
             <Link to="/login" 
             // state={{backgroundLocation: location, initialPath: location.pathname}}
             ><span style={{cursor: 'pointer'}} onClick={()=>setActiveModal(true) }>

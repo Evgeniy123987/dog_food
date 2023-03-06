@@ -12,4 +12,5 @@ export const SearchInfo = ({ searchText, searchCount, debounceSearchQuery }) => 
         </section>) : ''}
         </>
     )
+
 }

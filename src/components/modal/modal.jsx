@@ -1,5 +1,5 @@
 import cn from "classnames"
-import { useEffect, useState } from "react"
+// import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import '../modal/index.css'
 
@@ -7,10 +7,10 @@ export const Modal = ({ children, activeModal, setActiveModal }) => {
     
     // const [active, setActive] = useState(false)
 
-    useEffect (()=>{
-        // setActive(true)
-        // setActiveModal(false)
-    }, [])
+    // useEffect (()=>{
+    //     setActive(true)
+    //     setActiveModal(false)
+    // }, [])
     
     const navigate = useNavigate()
 

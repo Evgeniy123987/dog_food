@@ -7,8 +7,6 @@ import quality from './img/quality.svg'
 import truck from './img/truck.svg'
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { Rating } from "../rating/rating"
-import { UserContext } from "../../context/userContext"
-import { useContext } from "react"
 import api from '../../../src/utils/Api'
 import { Form } from "../form/form"
 import { useForm } from "react-hook-form"
@@ -19,10 +17,11 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     description, reviews, onSendReviews }) => {
     const [users, setUsers] = useState([])
     const [showForm, setShowForm] = useState(false)
+    const [rating, setRating] = useState(0)
 
     const discount_price = Math.round(price - price * discount / 100);
     const isLike = likes.some((id) => id === currentUser?._id);
-    const desctiptionHTML = { __html: description }
+    // const desctiptionHTML = { __html: description }
 
     let navigate = useNavigate()
 
@@ -69,7 +68,8 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     // const sendReviews = (data) => {
     //     console.log(data)
     // }    
-    const formSabmit = () => {
+    const formSabmit = (data) => {
+        onSendReviews({...data, rating})
         setShowForm(true)
     }
 
@@ -85,7 +85,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             <h1 className={s.productTitle}>{name}</h1>
             <div>
                 <span>артикул: </span><b>23890</b>
-                <Rating isEditable={true} rating={5} />
+                <Rating isEditable={true} rating={rating} setRating={setRating}/>
                 <span>{reviews?.length}отзывов</span>
             </div>
         </div>
@@ -133,7 +133,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
 
         <div className={s.box}>
             <h2 className={s.title}>Описание</h2>
-            <p className={s.subtitle} dangerouslySetInnerHTML={desctiptionHTML}></p>
+            <p className={s.subtitle}>{description}</p>
             <h2 className={s.title}>Характеристики</h2>
             <div className={s.grid}>
                 <div className={s.naming}>Вес</div>
@@ -182,9 +182,11 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
 
         <div className={s.reviews}>
             <div>Reviews</div>
-            {!showForm ? <button className={s.reviews__button} onClick={()=>{formSabmit()}}>Написать отзыв</button> :
+            {/* {!showForm ?  */}
+            <button className={s.reviews__button} onClick={()=>{formSabmit()}}>Написать отзыв</button> :
             <Form 
             handleFormSubmit={handleSubmit(onSendReviews)} title={"Написать отзыв"}>
+                <Rating isEditable={true} rating={rating} setRating={setRating} />
             <div className={s.review__container}>
             <textarea
                 {...reviewRegister}
@@ -197,8 +199,10 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
                 <BaseButton type='submit'>Отправить</BaseButton>
             </div>
             </div>
-            </Form>}
-            {reviews?.sort((a, b)=> new Date(b.created_at) - new Date(a.created_at)).map((e)=><div>
+            </Form>
+            {/* } */}
+            {reviews?.sort((a, b)=> new Date(b.created_at) - new Date(a.created_at)).map((e)=>
+            <div>
                 <span>{getUser(e.author)}</span>
                 <span>{e.created_at.slice(0, 10)}</span><br></br>
                 <Rating rating={e.rating}/>

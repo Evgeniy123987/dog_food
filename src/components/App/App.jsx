@@ -10,12 +10,7 @@ import { Router } from '../../router/router'
 import { UserContext } from '../../context/userContext'
 import { CardContext } from '../../context/cardContext'
 import { isLiked } from '../../utils/utils'
-import { Modal } from '../modal/modal'
-import { RegistrationForm } from '../form/registrationForm'
-import { Login } from '../login/login'
-import { Register } from '../register/register'
-import { Reset } from '../resetPassword/resetPassword'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -26,7 +21,7 @@ function App() {
   const [contacts, setContacts] = useState([])
   const [activeModal, setActiveModal] = useState(false)
   const [reactName, setReactName] = useState('')
-  const [isAuthentificated, setAuthentificated] = useState(false)
+  // const [isAuthentificated, setAuthentificated] = useState(false)
 
   const debounceSearchQuery = useDebounce(searchQuery, 2000);
 
@@ -116,7 +111,7 @@ function App() {
     }
   }
   
-  const context = UserContext;
+  // const context = UserContext;
   const valueProvaider = {
     cards: cards,
     favorites,
@@ -138,7 +133,6 @@ function App() {
   const location = useLocation()
   const backgroundLocation = location.state?.backgroundLocation
   const initialPath = location.state?.initialPath
-  console.log({location})
 
   useEffect(()=>{
 

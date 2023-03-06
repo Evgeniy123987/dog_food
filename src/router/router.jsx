@@ -1,5 +1,5 @@
 import { Modal } from "../components/modal/modal"
-import { Route, Routes, useLoaderData, useLocation } from "react-router-dom"
+import { Route, Routes, useLocation } from "react-router-dom"
 import { FaqPage } from "../pages/faq/faq-page"
 import { Favorite } from "../pages/favorites/favoretes"
 import { NoMatchFound } from "../pages/NoMatchFound/NoMatchFound"
@@ -10,7 +10,7 @@ import { Register } from "../components/register/register"
 import { Reset } from "../components/resetPassword/resetPassword"
 
 
-export const Router = ({ handleProductLike, addContact, curentUser, setActiveModal, activeModal, backgroundLocation, initialPath })=> {
+export const Router = ({ handleProductLike, curentUser, setActiveModal, activeModal, backgroundLocation, initialPath })=> {
    
   const location = useLocation()
   
@@ -41,10 +41,6 @@ export const Router = ({ handleProductLike, addContact, curentUser, setActiveMod
           <Reset />
         </Modal>}>
         </Route>
-          
-          
-       
-
         </Routes>
     )
 }

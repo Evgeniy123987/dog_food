@@ -36,11 +36,12 @@ export const Register = () => {
         try{
         console.log(data)
         await authApi.register({...data, group: 'group-9'})
-        navigate('/')
+        navigate('/login')
         } catch (error) {
             console.log(error)
         }
     }
+
 
     const navigate = useNavigate()
     return(
