@@ -12,13 +12,16 @@ import { Form } from "../form/form"
 import { useForm } from "react-hook-form"
 import { BaseButton } from "../baseButton/baseButton"
 import { VALIDATE_CONFIG } from "../../constants/constants"
+import { DeleteOutlined } from "@mui/icons-material"
 
 export const Product = ({ pictures, name, price, discount, onProductLike, likes = [], currentUser,
-    description, reviews, onSendReviews }) => {
+    description, reviews, onSendReviews, deleteReviews }) => {
     const [users, setUsers] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [rating, setRating] = useState(0)
-
+    
+    const userId = reviews?.map((e)=> e.author === currentUser._id)
+    
     const discount_price = Math.round(price - price * discount / 100);
     const isLike = likes.some((id) => id === currentUser?._id);
     // const desctiptionHTML = { __html: description }
@@ -41,6 +44,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     const param = useParams()
 
     const getUser = (id)=>{
+
         if (!users.length) return 'User'
         const user = users.find(el => el._id === id)
         return user?.name ?? 'User'
@@ -68,9 +72,15 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     // const sendReviews = (data) => {
     //     console.log(data)
     // }    
+    console.log(rating)
+    
     const formSabmit = (data) => {
         onSendReviews({...data, rating})
         setShowForm(true)
+    }
+    
+    const deleteReviewSabmit = (e)  => {
+        deleteReviews(e)
     }
 
     // const closeForm = () => {
@@ -207,7 +217,9 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
                 <span>{e.created_at.slice(0, 10)}</span><br></br>
                 <Rating rating={e.rating}/>
                 <p>{e.text}</p>
+                {(e.author === currentUser._id) ? <span onClick={()=>deleteReviewSabmit(e._id)}><DeleteOutlined /></span> : ""}
                 <div className={s.reviews__section_line}></div>
+                {console.log(e)}
             </div>)}
         </div>
     </>

@@ -69,10 +69,22 @@ class Api {
     }
 
     addReview(productId, body) {
+        console.log(body)
         return fetch(`${this._baseUrl}/products/review/${productId}`, {
             headers: this._headers,
             method: 'POST',
             body: JSON.stringify(body)
+        }).then(
+            onResponse
+        ).catch((e) => {
+            console.log(e)
+        })
+    }
+
+    deleteReviews(postId, commentId) {
+        return fetch(`${this._baseUrl}/products/review/${postId}/${commentId}`, {
+            headers: this._headers,
+            method: 'DELETE',
         }).then(
             onResponse
         ).catch((e) => {

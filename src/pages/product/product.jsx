@@ -52,10 +52,23 @@ export const ProductPage = ({curentUser}) => {
     }
     
   }
+
+  const deleteReviews = async (id) =>{
+    try {
+      const res = await api.deleteReviews(product._id, id)
+      console.log(`product._id  >>>>>   ${product._id}`)
+      console.log(`id >>>>  ${id}`)
+      setProduct({...res})
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
   return <>
     <div className="App">
       {isLoading ? <Spinner /> : <Product {...product} currentUser={curentUser} onProductLike={onProductLike} 
-      onSendReviews={onSendReviews} />}
+      onSendReviews={onSendReviews} deleteReviews={deleteReviews} />}
     </div>
   </>
 }
