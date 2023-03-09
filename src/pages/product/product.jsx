@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react"
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
+import { openNotification } from "../../components/notification/notification.jsx"
 import { Product } from "../../components/product/product.jsx"
 import Spinner from "../../components/spinner/index.jsx"
 import { UserContext } from "../../context/userContext.js"
@@ -47,8 +48,9 @@ export const ProductPage = ({curentUser}) => {
     try {
       const res = await api.addReview(product._id, data)
       setProduct({...res})
+      openNotification('success', 'Success', 'Ваш отзыв успешно опубликован')
     } catch (error) {
-      console.log(error)
+      openNotification('error', 'Error', 'Не получилось опубликовать отзыв')
     }
     
   }
@@ -56,12 +58,10 @@ export const ProductPage = ({curentUser}) => {
   const deleteReviews = async (id) =>{
     try {
       const res = await api.deleteReviews(product._id, id)
-      console.log(`product._id  >>>>>   ${product._id}`)
-      console.log(`id >>>>  ${id}`)
       setProduct({...res})
-      console.log(res)
+      openNotification('success', 'Success', 'Ваш отзыв успешно удален')
     } catch (error) {
-      console.log(error)
+      openNotification('error', 'Error', 'Не получилось удалить отзыв')
     }
     
   }

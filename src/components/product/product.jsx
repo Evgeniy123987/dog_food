@@ -13,14 +13,17 @@ import { useForm } from "react-hook-form"
 import { BaseButton } from "../baseButton/baseButton"
 import { VALIDATE_CONFIG } from "../../constants/constants"
 import { DeleteOutlined } from "@mui/icons-material"
+import { LeftOutlined } from "@ant-design/icons"
 
 export const Product = ({ pictures, name, price, discount, onProductLike, likes = [], currentUser,
-    description, reviews, onSendReviews, deleteReviews }) => {
+    description, reviews, onSendReviews, deleteReviews, stock }) => {
     const [users, setUsers] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [rating, setRating] = useState(0)
+    const [counterCard, setCounterCard] = useState(0)
+
     
-    const userId = reviews?.map((e)=> e.author === currentUser._id)
+    // const userId = reviews?.map((e)=> e.author === currentUser._id)
     
     const discount_price = Math.round(price - price * discount / 100);
     const isLike = likes.some((id) => id === currentUser?._id);
@@ -74,8 +77,8 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     // }    
     console.log(rating)
     
-    const formSabmit = (data) => {
-        onSendReviews({...data, rating})
+    const formSabmit = () => {
+        // onSendReviews({...data, rating})
         setShowForm(true)
     }
     
@@ -87,16 +90,27 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     //     setShowForm(false)
     // }
 
+    const handleCard = ()=> {
+        const goods = localStorage.getItem('goods')
+        if (!goods) {
+            localStorage.setItem('goods', JSON.stringify([{name, counterCard}]))
+        } else {
+            localStorage.setItem('goods', JSON.stringify([...JSON.parse(goods), {name, counterCard}]))
+        }
+    }
+
     return <>
-    <button onClick={handleClick} className="button">назад</button>
+    <span onClick={handleClick} className={s.button__back}>
+        <LeftOutlined /> Назад
+    </span>
     <div className={s.product__container}>
         <div>
         <div>
             <h1 className={s.productTitle}>{name}</h1>
-            <div>
+            <div className={s.rating__cards}>
                 <span>артикул: </span><b>23890</b>
-                <Rating isEditable={true} rating={rating} setRating={setRating}/>
-                <span>{reviews?.length}отзывов</span>
+                <span className={s.rating__top}><Rating isEditable={true} rating={rating} setRating={setRating}/></span>
+                <a href="#reviews" className={s.rating__link}>{reviews?.length} отзывов</a>
             </div>
         </div>
         <div className={s.product}>
@@ -110,11 +124,11 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             {!!discount && (<span className={cn(s.price, 'card__price_type_discount')}>{discount_price}&nbsp;P</span>)}
             <div className={s.btnWrap}>
                 <div className={s.left}>
-                    <button className={s.minus}>-</button>
-                    <span className={s.num}>0</span>
-                    <button className={s.plus}>+</button>
+                    <button className={s.minus} onClick={()=>counterCard > 0 && setCounterCard(counterCard - 1)}>-</button>
+                    <span className={s.num}>{counterCard}</span>
+                    <button className={s.plus} onClick={()=>stock > counterCard && setCounterCard(counterCard + 1)}>+</button>
                 </div>
-                <a href="/#" className={cn('btn', 'btn_type_primary', s.card)}>В корзину</a>
+                <button href="/#" className={s.product__basket} onClick={handleCard()}>В корзину</button>
             </div>
             <button className={cn(s.favorite, { [s.favoriteActive]: isLike })} onClick={onProductLike}>
                 <Save />
@@ -191,9 +205,10 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
         </div> */}
 
         <div className={s.reviews}>
-            <div>Reviews</div>
-            {/* {!showForm ?  */}
-            <button className={s.reviews__button} onClick={()=>{formSabmit()}}>Написать отзыв</button> :
+            <div id="reviews">Reviews</div>
+            
+            {!showForm ? <button className={s.reviews__button} onClick={()=>{formSabmit()}}>Написать отзыв</button> : ""}
+            {showForm ? 
             <Form 
             handleFormSubmit={handleSubmit(onSendReviews)} title={"Написать отзыв"}>
                 <Rating isEditable={true} rating={rating} setRating={setRating} />
@@ -209,8 +224,8 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
                 <BaseButton type='submit'>Отправить</BaseButton>
             </div>
             </div>
-            </Form>
-            {/* } */}
+            </Form> : ''
+            }
             {reviews?.sort((a, b)=> new Date(b.created_at) - new Date(a.created_at)).map((e)=>
             <div>
                 <span>{getUser(e.author)}</span>

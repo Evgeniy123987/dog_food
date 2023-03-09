@@ -228,6 +228,41 @@
 .review__button {
     margin: 10px;
 }
+.button__back { 
+    padding: 15px;
+    cursor: pointer;
+    color: #7B8E98;
+}
+.button__back:hover {
+    color: black;
+}
+
+.rating__cards {
+    display: flex;
+}
+
+.rating__link {
+    color: #FFAA0D;
+    text-decoration-line: underline;
+    padding-left: 15px;
+}
+
+.rating__top {
+    padding-left: 15px;
+}
+
+.product__basket {
+    padding: 10px 18px;
+    background-color: #FFE44D;
+    border-radius: 50px;
+    font-family: 'Nunito';
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    width: 10rem;
+    height: 3rem;
+    cursor: pointer;
+}
 
 @media (max-width: 1000px) {
     .product {
