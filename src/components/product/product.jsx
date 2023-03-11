@@ -21,6 +21,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     const [showForm, setShowForm] = useState(false)
     const [rating, setRating] = useState(0)
     const [counterCard, setCounterCard] = useState(0)
+    // const [reviewsProduct, setReviewsProduct] = useState(reviews?.slice(0, 2))
 
     
     // const userId = reviews?.map((e)=> e.author === currentUser._id)
@@ -75,7 +76,6 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     // const sendReviews = (data) => {
     //     console.log(data)
     // }    
-    console.log(rating)
     
     const formSabmit = () => {
         // onSendReviews({...data, rating})
@@ -98,6 +98,10 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             localStorage.setItem('goods', JSON.stringify([...JSON.parse(goods), {name, counterCard}]))
         }
     }
+
+    // const onMore = () => {
+    //     setReviewsProduct((state)=>[...reviews.slice(0, state?.length + 2)])
+    // }
 
     return <>
     <span onClick={handleClick} className={s.button__back}>
@@ -208,6 +212,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             <div id="reviews">Reviews</div>
             
             {!showForm ? <button className={s.reviews__button} onClick={()=>{formSabmit()}}>Написать отзыв</button> : ""}
+
             {showForm ? 
             <Form 
             handleFormSubmit={handleSubmit(onSendReviews)} title={"Написать отзыв"}>
@@ -226,15 +231,15 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             </div>
             </Form> : ''
             }
+            {/* <span onClick={onMore}>Еще отзыв</span> */}
             {reviews?.sort((a, b)=> new Date(b.created_at) - new Date(a.created_at)).map((e)=>
-            <div>
+            <div key={e._id}>
                 <span>{getUser(e.author)}</span>
                 <span>{e.created_at.slice(0, 10)}</span><br></br>
                 <Rating rating={e.rating}/>
                 <p>{e.text}</p>
                 {(e.author === currentUser._id) ? <span onClick={()=>deleteReviewSabmit(e._id)}><DeleteOutlined /></span> : ""}
                 <div className={s.reviews__section_line}></div>
-                {console.log(e)}
             </div>)}
         </div>
     </>

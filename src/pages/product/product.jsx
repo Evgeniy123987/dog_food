@@ -6,6 +6,7 @@ import { Product } from "../../components/product/product.jsx"
 import Spinner from "../../components/spinner/index.jsx"
 import { UserContext } from "../../context/userContext.js"
 import api from "../../utils/Api.jsx"
+import { isLiked } from "../../utils/utils.js"
 
 // const productId = '622c77d477d63f6e70967d1f';
 
@@ -14,7 +15,7 @@ export const ProductPage = ({curentUser}) => {
   // const [cards, setCards] = useState([]);
   // const [searchQuery, setSearcQuery] = useState('');
   // const [currentUser, setCurrentUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState(null);
   const { handleProductLike } = useContext(UserContext)
   const { productId } = useParams()
@@ -32,16 +33,24 @@ export const ProductPage = ({curentUser}) => {
   // }, [debounceSearchQuery])
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsLoading(false);
     // api.getUserInfo().then((userData) => setCurrentUser(userData));
     api.getProductById(productId)
       .then((productData) => setProduct(productData))
       // .catch((err) => console.log('err', err))
       .finally(() => setIsLoading(false))
-  }, [productId, fav.favorites])
+  }, [productId])
 
-  const onProductLike = () => { 
+  const onProductLike = (e) => { 
     handleProductLike(product)
+    const liked = isLiked (product.likes, curentUser?._id)
+    if (liked) {
+      const filteredLikes = product.likes.filter((e) => e !== curentUser._id)
+      setProduct({...product, likes: filteredLikes})
+    } else {
+      const addedLikes = [...product.likes, `${curentUser._id}`]
+      setProduct({ ...product, likes: addedLikes})
+    }
   }
 
   const onSendReviews = async (data) =>{
