@@ -1,0 +1,29 @@
+.noMatch {
+    width: auto;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.noMatch__smyle {
+    padding: 10px;
+    font-size: 10em;
+    opacity: 0.1;
+}
+
+.noMatch__text {
+    padding: 10px;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.noMatch__button {
+    width: 200px;
+   padding: 10px;
+   margin: 10px;
+   border-radius: 20px;
+   border-style: none; 
+   cursor: pointer;
+}

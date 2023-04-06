@@ -1,5 +1,5 @@
 .header {
-    width: 100fr;
+    width: auto;
     height: auto;
     background-color: #FFE44D;
     padding: 16px 20px;
@@ -49,8 +49,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    top: -40%;
-    left: 15%;
+    top: -37%;
+    left: 22%;
     border: 1px solid rgb(205, 131, 255);
     border-radius: 50%;
     background-color: rgb(205, 131, 255);
@@ -72,3 +72,28 @@
         width: 100fr;
     }
 } */
+
+@media (max-width: 880px) {
+    .cards__list{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .search__input{
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .cards__list{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .header__container {
+        flex-direction: column;
+    }
+    .search__container {
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+    .header {
+        width: 100fr;
+    }
+}

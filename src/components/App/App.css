@@ -4,3 +4,9 @@
     margin: auto;
     
 }
+
+.autorization__page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

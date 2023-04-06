@@ -33,7 +33,6 @@ export const ProductPage = ({curentUser}) => {
   // }, [debounceSearchQuery])
 
   useEffect(() => {
-    setIsLoading(false);
     // api.getUserInfo().then((userData) => setCurrentUser(userData));
     api.getProductById(productId)
       .then((productData) => setProduct(productData))

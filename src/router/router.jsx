@@ -1,16 +1,14 @@
-import { Modal } from "../components/modal/modal"
+
 import { Route, Routes, useLocation } from "react-router-dom"
 import { FaqPage } from "../pages/faq/faq-page"
 import { Favorite } from "../pages/favorites/favoretes"
 import { NoMatchFound } from "../pages/NoMatchFound/NoMatchFound"
 import { CatalogPage } from "../pages/product/catalog/catalog"
 import { ProductPage } from "../pages/product/product"
-import { Login } from "../components/login/login"
-import { Register } from "../components/register/register"
-import { Reset } from "../components/resetPassword/resetPassword"
+import { Charts } from "../components/chart/chart"
 
 
-export const Router = ({ handleProductLike, curentUser, setActiveModal, activeModal, backgroundLocation, initialPath })=> {
+export const Router = ({ handleProductLike, curentUser, setActiveModal, activeModal, backgroundLocation, initialPath, cards })=> {
    
   const location = useLocation()
   
@@ -25,22 +23,7 @@ export const Router = ({ handleProductLike, curentUser, setActiveModal, activeMo
           <Route path="/faq" element={<FaqPage />}></Route>
           <Route path='*' element={<NoMatchFound />}></Route>
 
-          <Route path='/login' element={
-              <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-          <Login />
-        </Modal>}>
-        </Route>
-
-        <Route path='/register' element={ <Modal 
-        activeModal={activeModal} setActiveModal={setActiveModal}>
-          <Register />
-        </Modal>}>
-        </Route>
-
-        <Route path='/reset' element={ <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-          <Reset />
-        </Modal>}>
-        </Route>
+          <Route path="/charts" element={<Charts cards={cards}/>}></Route>
         </Routes>
     )
 }

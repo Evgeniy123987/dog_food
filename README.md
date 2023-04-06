@@ -1,3 +1,24 @@
+### Проект DogFood
+Реализовано:
+
+- Каталог продуктов
+- Страницы: главная, карточка товара, избраное, модальное окно (регистрация, авторизация, востановление пароля)
+- Подключен график (библиотека Ant)
+- Внедрен контекст через хук Context
+- Использованы форма useForm
+- Реакт
+- Для работы с сервером использован REST API
+
+### Использованы технологии
+Список использованных источников/ программных средств: reactjs.com  reactrouter.com ant.design.com react-hook-form.com echarts.apache.com  github.com
+
+Для запуска проекта нужно:
+
+Перейти в директорию проекта
+- npm install / yarn add // pnpm install
+- команда для запуска npm start
+- команда для сборки npm run build
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

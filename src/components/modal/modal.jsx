@@ -4,14 +4,7 @@ import { useNavigate } from "react-router-dom"
 import '../modal/index.css'
 
 export const Modal = ({ children, activeModal, setActiveModal }) => {
-    
-    // const [active, setActive] = useState(false)
 
-    // useEffect (()=>{
-    //     setActive(true)
-    //     setActiveModal(false)
-    // }, [])
-    
     const navigate = useNavigate()
 
     return (

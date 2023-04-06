@@ -10,7 +10,13 @@ import { Router } from '../../router/router'
 import { UserContext } from '../../context/userContext'
 import { CardContext } from '../../context/cardContext'
 import { isLiked } from '../../utils/utils'
-import {useLocation} from 'react-router-dom'
+import {Route, Routes, useLocation} from 'react-router-dom'
+import zamok from '../../assets/image/zamok.jpg'
+import { Modal } from '../modal/modal'
+import { Login } from '../login/login'
+import { Register } from '../register/register'
+import { Reset } from '../resetPassword/resetPassword'
+
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -21,32 +27,24 @@ function App() {
   const [contacts, setContacts] = useState([])
   const [activeModal, setActiveModal] = useState(false)
   const [reactName, setReactName] = useState('')
-  // const [isAuthentificated, setAuthentificated] = useState(false)
 
-  const debounceSearchQuery = useDebounce(searchQuery, 2000);
+  const debounceSearchQuery = useDebounce(searchQuery, 500);
 
   const checkCardLocal = (i) => {
     return new Date(i.created_at) < new Date(
     "2022-04-12T10:36:12.324Z")
   }
+  
 
   const handleRecuest = (eventFromInput) => {
     setSearcQuery(eventFromInput.target.value)
     setReactName(eventFromInput._reactName)
   }
 
-  useEffect (()=>{
-    // setActive(true)
-    setActiveModal(false)
-}, [])
-
-
-
   useEffect(() => {
     (searchQuery|| reactName) && api.search(searchQuery.toUpperCase())
       .then((cardsFromApi) => {
         setCards(cardsFromApi.filter((e)=>checkCardLocal(e)))
-        // .catch((err) => console.log(err))
       })
   }, [debounceSearchQuery])
 
@@ -61,10 +59,6 @@ function App() {
       setIsLoading(false)
     })
   }, [])
-
-  // const handleFormSubmit = (e) => {
-  //   // e.preventDefault();
-  // }
 
   function handleUpdateUser(userUpdateData) {
     api.setUserInfo(userUpdateData)
@@ -87,15 +81,6 @@ function App() {
     })
   }
 
-  // useEffect(() => {
-  //   const filteredCards = [].filter((item) =>
-  //     item.name.toUpperCase().includes(searchQuery.toUpperCase()));
-  //   setCards([...filteredCards]);
-
-  //   handleRecuest()
-  //   console.log('№№№№№№№№№№№№№№№№№№№№№№№',searchQuery)
-  // }, [searchQuery])
-
   const sortedData = (currentSort)=>{
     switch (currentSort) {
       case 'expensiv': setCards([...cards.sort((a,b)=>b.price - a.price)]); break
@@ -111,12 +96,11 @@ function App() {
     }
   }
   
-  // const context = UserContext;
   const valueProvaider = {
     cards: cards,
     favorites,
-    // setCurrentSort,
     onSortData: sortedData,
+    searchQuery
   }
 
   const userProvider = {
@@ -134,9 +118,6 @@ function App() {
   const backgroundLocation = location.state?.backgroundLocation
   const initialPath = location.state?.initialPath
 
-  useEffect(()=>{
-
-  }, [])
 
   return (
     <>
@@ -144,11 +125,9 @@ function App() {
       <UserContext.Provider value={userProvider}>
      
         <Header changeInput={handleRecuest} user={curentUser} onUpdateUser={handleUpdateUser} setActiveModal={setActiveModal} />
-        <div className="App">
-
-        {/* <Routes location={backgroundLocation && {...backgroundLocation, state:initialPath || location}}>
-          <Route path='/login' element={
-        <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+        <Routes>
+        <Route path='/login' element={
+              <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
           <Login />
         </Modal>}>
         </Route>
@@ -163,28 +142,19 @@ function App() {
           <Reset />
         </Modal>}>
         </Route>
-        </Routes> */}
-        
+        </Routes>
+        {!!localStorage.token ? <div className="App">
         
         <SearchInfo searchText={searchQuery} searchCount={cards.length} debounceSearchQuery={debounceSearchQuery} />
-        {/* <Form /> */}
-        {/* <RegistrationForm addContact={addContact}/> */}
+     
         {isLoading ? <Spinner /> : <Router handleProductLike={handleProductLike} addContact={addContact} curentUser={curentUser} 
         activeModal={activeModal} setActiveModal={setActiveModal} backgroundLocation={backgroundLocation} initialPath={initialPath} 
-        />}
-        {/* <Navigate to={'product'} replace /> */}
+        cards={cards} />}
+        </div> : <div className='autorization__page'>
+          <div>Пожайлуста авторизируйтесь</div>
+          <img src={zamok} width={700}></img>
+        </div>}
 
-        {/* <CardList data={cards} curentUser={curentUser} onProductLike={handleProductLike} /> */}
-        </div>
-  
-
-        {/* {!!contacts.length && contacts.map((el)=>(
-          <div>
-            <p>{el.name}</p>
-            <p>{el.lastName}</p>
-            <p>{el.phoneNamber}</p>
-          </div>
-        ))} */}
         <Footer />
       </UserContext.Provider>
       </CardContext.Provider>

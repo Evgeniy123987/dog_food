@@ -20,14 +20,14 @@ export const RegistrationForm = () => {
                   message: 'big name'
                 },
             })}
-            // onInput={handleChange} 
+
             />
             <span>{errors?.name && <p style={{color: 'red'}}>{errors?.name?.message}</p>}</span>
             <input 
             className={s.form} 
             type='password' 
             placeholder='password' 
-            // onInput={handleChange} 
+
             required
             {...register('password', {
                 required: 'обязательное поле',
@@ -43,7 +43,7 @@ export const RegistrationForm = () => {
             className={s.form} 
             type='number' 
             placeholder='Телефон' 
-            // onInput={handleChange}
+
             required
             {...register('phoneNamber')}
             />

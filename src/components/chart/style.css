@@ -1,0 +1,8 @@
+.chart {
+    width: auto;
+    height: 700px;
+}
+.chart__name {
+    font-size: large;
+    padding: 10px;
+}

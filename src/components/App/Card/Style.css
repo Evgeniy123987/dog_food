@@ -87,3 +87,9 @@
     font-weight: 600;
 }
 
+.number__like {
+    position: relative;
+    top: -6px;
+    left: -3px;
+}
+

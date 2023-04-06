@@ -21,14 +21,9 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
     const [showForm, setShowForm] = useState(false)
     const [rating, setRating] = useState(0)
     const [counterCard, setCounterCard] = useState(0)
-    // const [reviewsProduct, setReviewsProduct] = useState(reviews?.slice(0, 2))
 
-    
-    // const userId = reviews?.map((e)=> e.author === currentUser._id)
-    
     const discount_price = Math.round(price - price * discount / 100);
     const isLike = likes.some((id) => id === currentUser?._id);
-    // const desctiptionHTML = { __html: description }
 
     let navigate = useNavigate()
 
@@ -67,28 +62,15 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             },
             minLength: {value: 4,
             message: 'минимальное количество символов'}
-            // pattern: {
-            //     value: EMAIL_REGEXP,
-            //     message: VALIDATE_CONFIG.email
-            // }
         })    
-
-    // const sendReviews = (data) => {
-    //     console.log(data)
-    // }    
     
     const formSabmit = () => {
-        // onSendReviews({...data, rating})
         setShowForm(true)
     }
     
     const deleteReviewSabmit = (e)  => {
         deleteReviews(e)
     }
-
-    // const closeForm = () => {
-    //     setShowForm(false)
-    // }
 
     const handleCard = ()=> {
         const goods = localStorage.getItem('goods')
@@ -98,10 +80,6 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             localStorage.setItem('goods', JSON.stringify([...JSON.parse(goods), {name, counterCard}]))
         }
     }
-
-    // const onMore = () => {
-    //     setReviewsProduct((state)=>[...reviews.slice(0, state?.length + 2)])
-    // }
 
     return <>
     <span onClick={handleClick} className={s.button__back}>
@@ -132,7 +110,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
                     <span className={s.num}>{counterCard}</span>
                     <button className={s.plus} onClick={()=>stock > counterCard && setCounterCard(counterCard + 1)}>+</button>
                 </div>
-                <button href="/#" className={s.product__basket} onClick={handleCard()}>В корзину</button>
+                <button href="/#" className={s.product__basket} onClick={handleCard}>В корзину</button>
             </div>
             <button className={cn(s.favorite, { [s.favoriteActive]: isLike })} onClick={onProductLike}>
                 <Save />
@@ -187,26 +165,6 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
                 </div>
             </div>
         </div>
-        {/* <div className="reviews__section">
-            <h3 className={s.title}>Отзывы</h3>
-            <button className={s.reviews__button}>Написать отзыв</button>
-            <div className="reviews__photo-section">
-                <h5>Фотографии наших покупателей</h5>
-                <div className="reviews__photo">
-
-                </div>
-            </div>
-            <div className={s.reviews__section_line}></div>
-            <div className="reviews__section-feetback">
-                <h4></h4>
-                <span></span>
-                <Rating />
-                <p></p>
-               
-            </div>
-            <div className="reviews__section-line"></div>
-            <button className={s.reviews__button}>Все отзывы</button>
-        </div> */}
 
         <div className={s.reviews}>
             <div id="reviews">Reviews</div>
@@ -231,7 +189,7 @@ export const Product = ({ pictures, name, price, discount, onProductLike, likes 
             </div>
             </Form> : ''
             }
-            {/* <span onClick={onMore}>Еще отзыв</span> */}
+
             {reviews?.sort((a, b)=> new Date(b.created_at) - new Date(a.created_at)).map((e)=>
             <div key={e._id}>
                 <span>{getUser(e.author)}</span>

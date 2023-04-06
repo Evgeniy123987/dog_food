@@ -7,8 +7,10 @@ import { CardContext } from "../../../context/cardContext"
 export const CatalogPage = ({ handleProductLike}) => {
  
 const {cards} = useContext(CardContext)
+const {searchQuery} = useContext(CardContext)
+
  return <>
-    <Sort />
+    {searchQuery ? "" : <Sort />}
      <CardList onProductLike={handleProductLike} cards={cards} />
   </>
 }
